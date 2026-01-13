@@ -1,4 +1,5 @@
-import { Button } from "@/components/ui/button"
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardAction,
@@ -7,25 +8,27 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
- function Register() {
+function Register() {
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
-        <CardTitle>Register to your account</CardTitle>
+        <CardTitle>Create your CoPath account</CardTitle>
         <CardDescription>
-          Enter your email below to login to your account
-        </CardDescription>
-        <CardAction>
-          <Button variant="link">Sign Up</Button>
-        </CardAction>
+          Smarter carpooling starts here. Sign up to share rides, save costs,
+          and travel together.
+        </CardDescription>        
       </CardHeader>
       <CardContent>
         <form>
           <div className="flex flex-col gap-6">
+            <div className="grid gap-2">
+              <Label htmlFor="fName">Full Name</Label>
+              <Input id="fName" type="text" placeholder="Abc Xyz" required />
+            </div>
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -36,29 +39,35 @@ import { Label } from "@/components/ui/label"
               />
             </div>
             <div className="grid gap-2">
-              <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
-                <a
-                  href="#"
-                  className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                >
-                  Forgot your password?
-                </a>
-              </div>
+              <Label htmlFor="phone">Phone</Label>
+              <Input id="phone" type="text" placeholder="9988776655" required />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="password">Password</Label>
               <Input id="password" type="password" required />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="conPwd"> Confirm Password</Label>
+              <Input id="conPwd" type="password" required />
             </div>
           </div>
         </form>
       </CardContent>
       <CardFooter className="flex-col gap-2">
         <Button type="submit" className="w-full">
-          Login
+          Create Account
         </Button>
-        <Button variant="outline" className="w-full">
-          Login with Google
-        </Button>
+        <p className="mt-6 text-center text-sm text-copath-muted">
+          Already have an account?{" "}
+          <Link
+            to="/login"
+            className="text-copath-blue font-medium hover:underline"
+          >
+            Log in
+          </Link>
+        </p>
       </CardFooter>
     </Card>
-  )
+  );
 }
 export default Register;
