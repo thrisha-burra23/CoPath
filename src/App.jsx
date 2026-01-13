@@ -5,15 +5,15 @@ import Login from "./pages/Login";
 
 function App() {
   return <>
-  {/* <BrowserRouter>
+  <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+         <Route path="/register" element={<Register/>} />
         
       </Routes>
-    </BrowserRouter> */}
+    </BrowserRouter>
 
-    <Login/>
+    
 
   </>;
 }
