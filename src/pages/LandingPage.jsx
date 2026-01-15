@@ -1,21 +1,56 @@
 import { Button } from "@/components/ui/button";
 import bgImage from "../assets/bgImage.png";
-import logo from "../assets/logo.png"
+import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 import LandingHeader from "../components/LandingHeader";
+import SearchCard from "../components/SearchCard";
+import { IndianRupee, Lock, Route, Shield, Users } from "lucide-react";
 
 const LandingPage = () => {
   return (
     <div
-      className="min-h-screen bg-cover bg-center"
+      className="min-h-screen bg-cover bg-center flex flex-col relative "
       style={{ backgroundImage: `url(${bgImage})` }}
     >
-      <LandingHeader />
+      <div>
+        <LandingHeader />
+      </div>
 
-      <div className="flex flex-col items-center text-center mb-10">
-        <img src={logo} alt="CoPath" className="w-24 h-24 mb-4" />
-        <h1 className="text-4xl font-bold">CoPath</h1>
-        <p className="text-lg text-white/80 mt-2">Smarter Carpooling</p>
+      <div className="flex flex-col mt-20">
+        <div className="flex flex-row items-center justify-center  ">
+          <img src={logo} alt="CoPath" className="w-38 h-38 mb-4" />
+          <div className="flex flex-col items-center text-center mb-5">
+            <h1 className="text-7xl font-bold">
+              <span className="bg-linear-to-r from-cyan-400 via-sky-400 to-indigo-600 bg-clip-text text-transparent">
+                Co
+              </span>
+              Path
+            </h1>
+            <p className="text-lg text-white/80 mt-2">Smarter Carpooling</p>
+          </div>
+        </div>
+        <div className="flex justify-center items-center">
+          <SearchCard />
+        </div>
+      </div>
+
+      <div className="flex flex-row gap-8  items-center justify-center absolute  bottom-6 left-1/2 -translate-x-1/2">
+        <div className="flex flex-row gap-1">
+          <IndianRupee />
+          <span>Save Money</span>
+        </div>
+        <div className="flex flex-row gap-1">
+          <Users />
+          <span>Travel together</span>
+        </div>
+        <div className="flex flex-row gap-1">
+          <Route />
+          <span> Smart routes</span>
+        </div>
+        <div className="flex flex-row gap-1">
+          <Shield />
+          <span>Safe rides</span>
+        </div>
       </div>
     </div>
   );

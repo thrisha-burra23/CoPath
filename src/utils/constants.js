@@ -1,6 +1,2 @@
 export const APPWRITE_API_ENDPOINT = import.meta.env.VITE_APPWRITE_ENDPOINT
-export const APPWRITE_PROJECT_ID = import.meta.env.VITE_APPWRITE_PROJECT_ID
-export const APPWRITE_DB_ID=import.meta.env.VITE_APPWRITE_DB_ID
-export const APPWRITE_USERS_TABLE_ID=import.meta.env.VITE_APPWRITE_USERS_TABLE_ID
-export const APPWRITE_RIDES_TABLE_ID =import.meta.env.VITE_APPWRITE_RIDES_TABLE_ID  
-export const GRAPHHOPPER_API_KEY=import.meta.env.VITE_GRAPHHOPPER_API_KEY
+export const APPWRITE_PROJECT_ID=import.meta.env.VITE_APPWRITE_PROJECT_ID

@@ -1,8 +1,9 @@
 import { Client } from "appwrite";
-import {APPWRITE_API_ENDPOINT, APPWRITE_PROJECT_ID} from "../utils/appwrite/constants";
+import { APPWRITE_API_ENDPOINT, APPWRITE_PROJECT_ID } from "../utils/constants";
 
-const appwriteClient=new Client()
+
+const appwriteClient = new Client()
     .setEndpoint(APPWRITE_API_ENDPOINT)
-    .setProject(APPWRITE_PROJECT_ID)
+    .setProject(APPWRITE_PROJECT_ID);
 
 export default appwriteClient;
