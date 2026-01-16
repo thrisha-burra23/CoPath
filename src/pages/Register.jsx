@@ -14,8 +14,10 @@ import { useCreateAccount } from "../reactQuery/authHooks";
 import { useState } from "react";
 import FailedAlert from "../components/FailedAlert";
 import RegisterSkeleton from "../loadingSkeleton/RegisterSkeleton";
+import appwriteClient from "../appwrite";
 
 function Register() {
+  
   const registerMutation = useCreateAccount();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -24,19 +26,16 @@ function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [formError, setFormError] = useState("");
 
-  const handleRegisterSubmit = (event) => {
+  const handleRegisterSubmit = (event) => { 
     event.preventDefault();
 
     if (password !== confirmPassword) {
       setFormError("Password and Confirm Password should match");
       return;
     }
-
     setFormError("");
-
     const data = { email, password, fullName, phone };
     console.log(data);
-
     registerMutation.mutate({ email, password, fullName });
   };
 
@@ -61,7 +60,6 @@ function Register() {
       <form onSubmit={handleRegisterSubmit}>
         <CardContent>
           {formError && <FailedAlert alertMessage={formError} />}
-
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
               <Label htmlFor="fName">Full Name</Label>

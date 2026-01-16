@@ -18,8 +18,12 @@ class AppwriteAccount {
     }
 
     async getUser() {
-        const result = await this.account.get();
-        return result;
+        try {
+            return await this.account.get();
+        } catch (error) {
+            if (error.code === 401) return null;
+            throw error;
+        }
     }
 
     async login(email, password) {
@@ -30,22 +34,44 @@ class AppwriteAccount {
         return result;
     }
 
-    async logout() {
-        const result = await this.account.deleteSession({
-            sessionId: 'current'
-        })
-        console.log(result);
+    async sendEmailVerification() {
+        const result = await this.account.createVerification({
+            url: `${window.location.origin}/verify-email`
+        });
         return result;
     }
 
-    // async forgetPassword() {
-    
-    //         const result = this.account.
-    //     } catch (error) {
-    //         console.log("appwrit forget Password  error-->", error.message);
-    //         return null;
-    //     }
-    // }
+    async verifyEmail(userId, secret) {
+        const result = await this.account.updateVerification({ userId, secret });
+        return result;
+    }
+
+    async logout() {
+        try {
+            const result = await this.account.deleteSession({
+                sessionId: 'current'
+            })
+            console.log(result);
+        } catch (error) {
+            if (error.code !== 401) {
+                console.error("Logout Error", error.message);
+            }
+        }
+
+    }
+
+    async sendPasswordRecovery(email) {
+        const result = await this.account.createRecovery({
+            email: email,
+            url: `${window.location.origin}/resetPassword`
+        });
+        return result;
+    }
+
+    async resetPassword(userId, secret, password) {
+        const result = await this.account.updateRecovery({ userId, secret, password });
+        return result;
+    }
 }
 
 export default AppwriteAccount
