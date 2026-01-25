@@ -3,8 +3,8 @@ import bgImage from "../assets/bgImage.png";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 import LandingHeader from "../components/LandingHeader";
-import SearchCard from "../components/SearchCard";
 import { IndianRupee, Lock, Route, Shield, Users } from "lucide-react";
+import SearchCardOriginal from "../components/userDashboard/SearchCardOriginal";
 
 const LandingPage = () => {
   return (
@@ -20,7 +20,7 @@ const LandingPage = () => {
         <div className="flex flex-row items-center justify-center  ">
           <img src={logo} alt="CoPath" className="w-38 h-38 mb-4" />
           <div className="flex flex-col items-center text-center mb-5">
-            <h1 className="text-7xl font-bold">
+            <h1 className="text-7xl font-bold text-white">
               <span className="bg-linear-to-r from-cyan-400 via-sky-400 to-indigo-600 bg-clip-text text-transparent">
                 Co
               </span>
@@ -30,7 +30,7 @@ const LandingPage = () => {
           </div>
         </div>
         <div className="flex justify-center items-center">
-          <SearchCard />
+          <SearchCardOriginal />
         </div>
       </div>
 

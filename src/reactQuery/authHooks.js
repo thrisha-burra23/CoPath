@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import AppwriteAccount from "../appwrite/AuthServices.js"
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -11,11 +11,12 @@ export const useCreateAccount = () => {
     const result = useMutation({
         mutationFn: async ({ email, password, fullName }) => {
             const user = await appWriteAccount.createAccount(email, password, fullName);
-            await appWriteAccount.sendEmailVerification();
+            //await appWriteAccount.sendEmailVerification();
             return user;
         },
+        retry: false,
         onSuccess: () => {
-            toast.success("Verification Email sent. Please verify before login.");
+            toast.success("Account Created successfully. Please Login");
             navigate("/login")
         },
         onError: (error) => {
@@ -32,42 +33,57 @@ export const useCreateAccount = () => {
 
 export const useLogin = () => {
     const navigate = useNavigate();
-    return useMutation({
-        mutationFn: ({ email, password }) => appWriteAccount.login(email, password),
+    const result = useMutation({
+        mutationFn: async ({ email, password }) => {
+            try {
+                await appWriteAccount.logout();
+            } catch (e) { }
+            return await appWriteAccount.login(email, password)
+        },
         onSuccess: async () => {
-            queryClient.invalidateQueries({queryKey:["auth-user"]})
-            // if (!user.emailVerification) {
-            //     toast.error("Please verify your Email first.");
-            //     await appWriteAccount.logout();
-            //     return;
-            // }
-            
-            navigate("/userDashboard")
+            const user = await appWriteAccount.getUser();
+
+            if (!user.emailVerification) {
+                await appWriteAccount.sendEmailVerification(
+                    `${window.location.origin}/verify-email`
+                );
+                await appWriteAccount.logout();
+
+                toast.info("Verification email sent.Please verify your Email");
+                navigate("/verify-info");
+                return;
+            }
+
+            toast.success("Login successful");
+            navigate("/user-dashboard");
+
         },
         onError: (error) => {
             toast.error(error.message || "Invalid credentials");
         }
     })
+    return result;
 }
 
 export const useVerification = () => {
     const navigate = useNavigate();
     const result = useMutation({
         mutationFn: ({ userId, secret }) => appWriteAccount.verifyEmail(userId, secret),
+
         onSuccess: () => {
-            toast.success("Email Verified Successfully.");
+            toast.success("Email Verified Successfully. Please login");
             navigate("/login");
         },
+
         onError: () => {
-            toast.error("Email Verification Failed.")
-            navigate("/register");
+            toast.info("This verification link is invalid or already used. Please login.")
+            navigate("/login");
         }
     });
     return result;
 }
 
 export const useForgotPassword = () => {
-    const navigate = useNavigate();
 
     const result = useMutation({
         mutationFn: async ({ email }) => {
@@ -86,8 +102,9 @@ export const useForgotPassword = () => {
 export const useResetPassword = () => {
     const navigate = useNavigate();
     const result = useMutation({
-        mutationFn: ({ userId, secret, password }) => {
-            appWriteAccount.resetPassword(userId, secret, password);
+        mutationFn: async ({ userId, secret, password, confirmPassword }) => {
+            appWriteAccount.resetPassword(userId, secret, password, confirmPassword);
+            await appWriteAccount.logout();
         },
         onSuccess: () => {
             toast.success("Password set successful");
@@ -97,5 +114,40 @@ export const useResetPassword = () => {
             toast.error(error.message || "Something went wrong")
         }
     });
+    return result;
+}
+
+export const useAuthUser = () => {
+    const navigate = useNavigate();
+    const result = useQuery({
+        queryKey: ["auth-user"],
+        queryFn: async () => {
+            try {
+                const user = await appWriteAccount.getUser();
+                return user;
+            } catch (e) {
+                if (e.code === 401) {
+                    return null;
+                } throw e
+            }
+        },
+        // onError: () => navigate("/login"),
+        retry: false,
+        staleTime: 0,
+    });
+    return result;
+}
+
+export const useLogout = () => {
+    const navigate = useNavigate();
+    const result = useMutation({
+        mutationFn: async () => appWriteAccount.logout(),
+        onSuccess: () => {
+            queryClient.setQueryData(["auth-user"], null);
+            queryClient.invalidateQueries({ queryKey: ["auth-user"] });
+            toast.success("Logged out successfully");
+            navigate("/")
+        }
+    })
     return result;
 }

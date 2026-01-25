@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 const LandingHeader = () => {
   return (
     <header className=" flex justify-between items-center px-8 ">
-      <h2 className=" text-lg font-semibold">CoPath</h2>
+      <h2 className=" text-lg font-semibold text-white">CoPath</h2>
       <div className=" flex gap-4">
-        <Button variant="ghost">
+        <Button  className="text-white">
           <Link  to={"/login"}>Login</Link>
         </Button>
-        <Button variant="ghost">
+        <Button className="text-white">
           <Link to={"/register"}>Register</Link>
         </Button>
       </div>

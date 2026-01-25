@@ -25,7 +25,7 @@ const ResetPassword = () => {
       return;
     }
     setFormError("");
-    resetMutation.mutate({userId,secret,password});
+    resetMutation.mutate({userId,secret,password,confirmPassword});
   };
 
   

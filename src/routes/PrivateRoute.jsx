@@ -1,15 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
 import AppwriteAccount from "../appwrite/AuthServices";
 import { Navigate, Outlet } from "react-router-dom";
+import { useAuthUser } from "../reactQuery/authHooks";
 
 const appwriteAccount = new AppwriteAccount();
 
 const PrivateRoute = () => {
-  const { data: user, isLoading } = useQuery({
-    queryKey: ["auth-user"],
-    queryFn: () => appwriteAccount.getUser(),
-    retry: false,
-  });
+  const { data: user, isLoading } = useAuthUser();
 
   if (isLoading) {
     return <Outlet context={{ authLoading: true }} />;
@@ -20,7 +16,7 @@ const PrivateRoute = () => {
   }
 
   if (!user.emailVerification) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/verify-info" replace />;
   }
 
   return <Outlet context={{ authLoading: false, user }} />;

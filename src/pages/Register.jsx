@@ -14,10 +14,8 @@ import { useCreateAccount } from "../reactQuery/authHooks";
 import { useState } from "react";
 import FailedAlert from "../components/FailedAlert";
 import RegisterSkeleton from "../loadingSkeleton/RegisterSkeleton";
-import appwriteClient from "../appwrite";
 
 function Register() {
-  
   const registerMutation = useCreateAccount();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -26,7 +24,7 @@ function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [formError, setFormError] = useState("");
 
-  const handleRegisterSubmit = (event) => { 
+  const handleRegisterSubmit = (event) => {
     event.preventDefault();
 
     if (password !== confirmPassword) {
@@ -48,104 +46,106 @@ function Register() {
   }
 
   return (
-    <Card className="w-full max-w-sm">
-      <CardHeader>
-        <CardTitle>Create your CoPath account</CardTitle>
-        <CardDescription>
-          Smarter carpooling starts here. Sign up to share rides, save costs,
-          and travel together.
-        </CardDescription>
-      </CardHeader>
+    <div className="min-h-screen flex items-center justify-center">
+      <Card className="w-full max-w-sm ">
+        <CardHeader>
+          <CardTitle>Create your CoPath account</CardTitle>
+          <CardDescription>
+            Smarter carpooling starts here. Sign up to share rides, save costs,
+            and travel together.
+          </CardDescription>
+        </CardHeader>
 
-      <form onSubmit={handleRegisterSubmit}>
-        <CardContent>
-          {formError && <FailedAlert alertMessage={formError} />}
-          <div className="flex flex-col gap-6">
-            <div className="grid gap-2">
-              <Label htmlFor="fName">Full Name</Label>
-              <Input
-                id="fName"
-                type="text"
-                placeholder="Abc Xyz"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                required
-              />
+        <form onSubmit={handleRegisterSubmit}>
+          <CardContent>
+            {formError && <FailedAlert alertMessage={formError} />}
+            <div className="flex flex-col gap-6">
+              <div className="grid gap-2">
+                <Label htmlFor="fName">Full Name</Label>
+                <Input
+                  id="fName"
+                  type="text"
+                  placeholder="Abc Xyz"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="m@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="phone">Phone</Label>
+                <Input
+                  id="phone"
+                  type="text"
+                  placeholder="9988776655"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    if (formError) setFormError("");
+                  }}
+                  required
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="conPwd"> Confirm Password</Label>
+                <Input
+                  id="conPwd"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                    if (formError) setFormError("");
+                  }}
+                  required
+                />
+              </div>
             </div>
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="m@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="phone">Phone</Label>
-              <Input
-                id="phone"
-                type="text"
-                placeholder="9988776655"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  if (formError) setFormError("");
-                }}
-                required
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="conPwd"> Confirm Password</Label>
-              <Input
-                id="conPwd"
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => {
-                  setConfirmPassword(e.target.value);
-                  if (formError) setFormError("");
-                }}
-                required
-              />
-            </div>
-          </div>
-        </CardContent>
+          </CardContent>
 
-        <CardFooter className="flex-col gap-2 pt-6">
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={registerMutation.isPending}
-          >
-            {registerMutation.isPending
-              ? "Creating Account..."
-              : "Create Account"}
-          </Button>
-
-          <p className="mt-6 text-center text-sm text-copath-muted">
-            Already have an account?{" "}
-            <Link
-              to="/login"
-              className="text-copath-blue font-medium hover:underline"
+          <CardFooter className="flex-col gap-2 pt-6">
+            <Button
+              type="submit"
+              className="w-[50%] bg-cyan-500"
+              disabled={registerMutation.isPending}
             >
-              Log in
-            </Link>
-          </p>
-        </CardFooter>
-      </form>
-    </Card>
+              {registerMutation.isPending
+                ? "Creating Account..."
+                : "Create Account"}
+            </Button>
+
+            <p className="mt-6 text-center text-sm text-copath-muted">
+              Already have an account?{" "}
+              <Link
+                to="/login"
+                className="text-copath-blue font-medium hover:underline"
+              >
+                Log in
+              </Link>
+            </p>
+          </CardFooter>
+        </form>
+      </Card>
+    </div>
   );
 }
 

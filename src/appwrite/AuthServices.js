@@ -42,15 +42,16 @@ class AppwriteAccount {
     }
 
     async verifyEmail(userId, secret) {
-        const result = await this.account.updateVerification({ userId, secret });
+        const result = await this.account.updateVerification(userId, secret);
         return result;
     }
 
     async logout() {
         try {
-            const result = await this.account.deleteSession({
-                sessionId: 'current'
-            })
+            const result = await this.account.deleteSessions();//deletes all sessions only for development, should replace this with the commented one
+            // const result = await this.account.deleteSession({
+            //     sessionId: 'current'
+            // })
             console.log(result);
         } catch (error) {
             if (error.code !== 401) {
@@ -63,13 +64,13 @@ class AppwriteAccount {
     async sendPasswordRecovery(email) {
         const result = await this.account.createRecovery({
             email: email,
-            url: `${window.location.origin}/resetPassword`
+            url: `${window.location.origin}/reset-password`
         });
         return result;
     }
 
-    async resetPassword(userId, secret, password) {
-        const result = await this.account.updateRecovery({ userId, secret, password });
+    async resetPassword(userId, secret, password,confirmPassword) {
+        const result = await this.account.updateRecovery({ userId, secret, password,confirmPassword });
         return result;
     }
 }

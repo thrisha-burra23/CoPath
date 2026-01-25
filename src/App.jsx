@@ -1,4 +1,4 @@
-import { BrowserRouter, Route,  Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import LandingPage from "./pages/LandingPage";
@@ -8,15 +8,15 @@ import { queryClient } from "./reactQuery/queryClient";
 import { ToastContainer } from "react-toastify";
 import PrivateRoute from "./routes/PrivateRoute";
 import UserDashboard from "./pages/UserDashboard";
-import VerifyEmail from "./components/VerifyEmail";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
-
+import VerifyEmail from "./components/auth/VerifyEmail";
+import VerifyInfo from "./components/auth/VerifyInfo";
 
 function App() {
-  useEffect(() => {
-    document.documentElement.classList.add("dark");
-  }, []);
+  // useEffect(() => {
+  //   document.documentElement.classList.add("dark");
+  // }, []);
 
   return (
     <>
@@ -26,11 +26,12 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/verify-info" element={<VerifyInfo />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
-            <Route path="/forgotPassword" element={<ForgotPassword />} />
-            <Route path="/resetPassword" element={<ResetPassword />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route element={<PrivateRoute />}>
-              <Route path="/userDashboard" element={<UserDashboard />} />
+              <Route path="/user-dashboard" element={<UserDashboard />} />
             </Route>
           </Routes>
         </BrowserRouter>
