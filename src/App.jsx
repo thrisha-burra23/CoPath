@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import LandingPage from "./pages/LandingPage";
-import { useEffect } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./reactQuery/queryClient";
 import { ToastContainer } from "react-toastify";
@@ -12,14 +11,15 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import VerifyEmail from "./components/auth/VerifyEmail";
 import VerifyInfo from "./components/auth/VerifyInfo";
+import OfferRide from "./pages/OfferRidePage";
+import RequestOfferRide from "./components/driver/RequestOfferRide";
 
 function App() {
-  // useEffect(() => {
-  //   document.documentElement.classList.add("dark");
-  // }, []);
+  console.log("ROUTE:", window.location.pathname);
 
   return (
     <>
+    
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <Routes>
@@ -32,6 +32,12 @@ function App() {
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route element={<PrivateRoute />}>
               <Route path="/user-dashboard" element={<UserDashboard />} />
+            </Route>
+            <Route element={<PrivateRoute />}>
+              <Route path="/offer-ride" element={<OfferRide />} />
+            </Route>
+            <Route element={<PrivateRoute/>}>
+              <Route path="/request-to-offer-ride" element={<RequestOfferRide/>}/>
             </Route>
           </Routes>
         </BrowserRouter>

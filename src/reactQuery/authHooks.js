@@ -3,15 +3,24 @@ import AppwriteAccount from "../appwrite/AuthServices.js"
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { queryClient } from "./queryClient.js";
+import { createProfile } from "../appwrite/ProfileServices.js";
 
 const appWriteAccount = new AppwriteAccount();
 
 export const useCreateAccount = () => {
     const navigate = useNavigate();
     const result = useMutation({
-        mutationFn: async ({ email, password, fullName }) => {
+        mutationFn: async ({ email, password, fullName, phone }) => {
             const user = await appWriteAccount.createAccount(email, password, fullName);
-            //await appWriteAccount.sendEmailVerification();
+            await createProfile({
+                userId:user.$id,
+                name:fullName,
+                email,
+                phone,
+                role:"USER",
+                driverApproved:false,
+                createdAt:new Date().toISOString
+            })
             return user;
         },
         retry: false,
@@ -118,7 +127,6 @@ export const useResetPassword = () => {
 }
 
 export const useAuthUser = () => {
-    const navigate = useNavigate();
     const result = useQuery({
         queryKey: ["auth-user"],
         queryFn: async () => {
@@ -131,7 +139,6 @@ export const useAuthUser = () => {
                 } throw e
             }
         },
-        // onError: () => navigate("/login"),
         retry: false,
         staleTime: 0,
     });
@@ -143,8 +150,10 @@ export const useLogout = () => {
     const result = useMutation({
         mutationFn: async () => appWriteAccount.logout(),
         onSuccess: () => {
-            queryClient.setQueryData(["auth-user"], null);
-            queryClient.invalidateQueries({ queryKey: ["auth-user"] });
+            queryClient.setQueryData(["is-logging-out"], true);
+            queryClient.removeQueries({ queryKey: ["auth-user"] });
+            // queryClient.setQueryData(["auth-user"], null);
+            // queryClient.invalidateQueries({ queryKey: ["auth-user"] });
             toast.success("Logged out successfully");
             navigate("/")
         }

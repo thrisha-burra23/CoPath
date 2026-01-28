@@ -1,4 +1,4 @@
-import { useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,8 +7,10 @@ import { useLogout } from "@/src/reactQuery/authHooks";
 const Header = () => {
   const { user } = useOutletContext();
   const logoutMutation = useLogout();
+  const navigate=useNavigate();
 
   const handleLogout = () => {
+    console.log("logout clicked")
     logoutMutation.mutate();
   };
 
@@ -27,7 +29,7 @@ const Header = () => {
         </div>
       </div>
       <div className="flex flex-row gap-6 justify-center items-center">
-        <Button variant="outline">Offer a Ride</Button>
+        <Button variant="outline" onClick={()=>navigate("/offer-ride")}>Offer a Ride</Button>
         <UserRound />
         <Button variant="outline" onClick={handleLogout}>
           Logout{" "}

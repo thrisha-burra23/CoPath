@@ -1,23 +1,24 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { fetchSuggestions } from "@/src/api/map";
-import { useAuthUser } from "@/src/reactQuery/authHooks";
+import { useCreateRide } from "@/src/reactQuery/rideHooks";
 import { useState } from "react";
+import { useOutletContext } from "react-router-dom";
 
-export default function SearchCard({ onSearch }) {
-  const { data: user, isLoading } = useAuthUser();
-  const isDisabled = isLoading || !user;
+const OfferRideCard = () => {
+  const { user } = useOutletContext();
+  const createRideMutation = useCreateRide();
 
   const [startText, setStartText] = useState("");
   const [endText, setEndText] = useState("");
-
   const [startLocation, setStartLocation] = useState(null);
   const [endLocation, setEndLocation] = useState(null);
-
   const [startSuggestions, setStartSuggestions] = useState([]);
   const [endSuggestions, setEndSuggestions] = useState([]);
-
   const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [seats, setSeats] = useState(1);
+  const [price, setPrice] = useState("");
 
   const handleStartChange = async (value) => {
     setStartText(value);
@@ -43,32 +44,41 @@ export default function SearchCard({ onSearch }) {
     setEndSuggestions(data);
   };
 
-  const handleSearch = () => {
-    if (!startLocation || !endLocation) {
-      return;
-    }
-    onSearch({
-      startLocation,
-      endLocation,
-      date,
+  const handleSubmit = () => {
+    if (!startLocation || !endLocation || !date || !time) return;
+
+    createRideMutation.mutate({
+      driverId: user.$id,
+      startLabel: startLocation.label,
+      startLat: startLocation.lat,
+      startLng: startLocation.lng,
+      endLabel: endLocation.label,
+      endLat: endLocation.lat,
+      endLng: endLocation.lng,
+      date: new Date(date).toISOString(),
+      time,
+      availableSeats: Number(seats),
+      price: Number(price || 0),
+      status: "ACTIVE",
     });
   };
 
   return (
-    <div className="w-full  max-w-sm space-y-4">
+    <div className="max-w-lg mx-auto p-6 space-y-4">
+      <h2 className="text-2xl font-semibold text-center">Offer a Ride</h2>
+
       <div className="relative">
         <Input
-          disabled={isDisabled}
           placeholder="Start Location"
           value={startText}
           onChange={(e) => handleStartChange(e.target.value)}
         />
         {startSuggestions.length > 0 && (
-          <div className="absolute z-10 w-full bg-white border rounded shadow">
+          <div className="absolute w-full bg-white border rounded shadow z-10">
             {startSuggestions.map((item) => (
               <div
                 key={item.label}
-                className="px-3 py-2 cursor-pointer hover:bg-gray-100"
+                className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
                 onClick={() => {
                   setStartText(item.label);
                   setStartLocation(item);
@@ -84,17 +94,16 @@ export default function SearchCard({ onSearch }) {
 
       <div className="relative">
         <Input
-          disabled={isDisabled}
           placeholder="End Location"
           value={endText}
           onChange={(e) => handleEndChange(e.target.value)}
         />
         {endSuggestions.length > 0 && (
-          <div className="absolute z-10 w-full bg-white border rounded shadow">
+          <div className="absolute w-full bg-white border rounded shadow z-10">
             {endSuggestions.map((item) => (
               <div
                 key={item.label}
-                className="px-3 py-2 cursor-pointer hover:bg-gray-100"
+                className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
                 onClick={() => {
                   setEndText(item.label);
                   setEndLocation(item);
@@ -113,15 +122,35 @@ export default function SearchCard({ onSearch }) {
         value={date}
         onChange={(e) => setDate(e.target.value)}
       />
+      <Input
+        type="time"
+        value={time}
+        onChange={(e) => setTime(e.target.value)}
+      />
+      <Input
+        type="number"
+        min={1}
+        placeholder="Available Seats"
+        value={seats}
+        onChange={(e) => setSeats(e.target.value)}
+      />
+      <Input
+        type="number"
+        min={0}
+        placeholder="Price per seat (optional)"
+        value={price}
+        onChange={(e) => setPrice(e.target.value)}
+      />
 
       <Button
-        onClick={handleSearch}
-        className="w-full text-white bg-[linear-gradient(135deg,#22D3EE,#38BDF8,#2563EB)]" variant="outline"
-        disabled={isDisabled || !startLocation || !endLocation}
+        className="w-full"
+        onClick={handleSubmit}
+        disabled={createRideMutation.isPending}
       >
-        Search Ride
+        {createRideMutation.isPending ? "Posting..." : "Post Ride"}
       </Button>
     </div>
-    
   );
-}
+};
+
+export default OfferRideCard;

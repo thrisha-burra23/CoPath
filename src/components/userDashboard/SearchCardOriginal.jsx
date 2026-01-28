@@ -8,13 +8,12 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const SearchCardOriginal = ({ selectedDate, setSelectedDate }) => {
-  const { data: user, isLoading } = useAuthUser();
+ // const { data: user, isLoading } = useAuthUser();
   const [startText, setStartText] = useState("");
   const [endText, setEndText] = useState("");
   const [openStart, setOpenStart] = useState(false);
   const [openEnd, setOpenEnd] = useState(false);
 
-  const navigate = useNavigate();
 
   // const checkAuth = useCallback(() => {
   //   if (isLoading) return false;
@@ -41,7 +40,7 @@ const SearchCardOriginal = ({ selectedDate, setSelectedDate }) => {
             <Input
               placeholder="Start Location"
               value={startText}
-              onFocus={checkAuth}
+              // onFocus={checkAuth}
               onChange={(e) => {
                 setStartText(e.target.value);
                 setOpenStart(true);
@@ -61,7 +60,7 @@ const SearchCardOriginal = ({ selectedDate, setSelectedDate }) => {
             <Input
               placeholder="End Location"
               value={endText}
-              onFocus={checkAuth}
+              // onFocus={checkAuth}
               onChange={(e) => {
                 setEndText(e.target.value);
                 setOpenEnd(true);
@@ -82,7 +81,7 @@ const SearchCardOriginal = ({ selectedDate, setSelectedDate }) => {
           <Input
             type="date"
             value={selectedDate || ""}
-            onFocus={checkAuth}
+            // onFocus={checkAuth}
             onChange={(e) => setSelectedDate(e.target.value || "")}
             className="bg-white"
           />

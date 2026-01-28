@@ -34,7 +34,7 @@ function Register() {
     setFormError("");
     const data = { email, password, fullName, phone };
     console.log(data);
-    registerMutation.mutate({ email, password, fullName });
+    registerMutation.mutate({ email, password, fullName, phone });
   };
 
   if (registerMutation.isPending) {

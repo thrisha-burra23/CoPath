@@ -1,9 +1,8 @@
 import { Button } from "@/components/ui/button";
 import bgImage from "../assets/bgImage.png";
 import logo from "../assets/logo.png";
-import { Link } from "react-router-dom";
 import LandingHeader from "../components/LandingHeader";
-import { IndianRupee, Lock, Route, Shield, Users } from "lucide-react";
+import { IndianRupee,  Route, Shield, Users } from "lucide-react";
 import SearchCardOriginal from "../components/userDashboard/SearchCardOriginal";
 
 const LandingPage = () => {
@@ -30,26 +29,26 @@ const LandingPage = () => {
           </div>
         </div>
         <div className="flex justify-center items-center">
-          <SearchCardOriginal />
+          <SearchCardOriginal/>
         </div>
       </div>
 
       <div className="flex flex-row gap-8  items-center justify-center absolute  bottom-6 left-1/2 -translate-x-1/2">
-        <div className="flex flex-row gap-1">
-          <IndianRupee />
-          <span>Save Money</span>
+        <div className=" flex flex-row gap-1">
+          <IndianRupee className="text-white" />
+          <span className="text-white">Save Money</span>
         </div>
         <div className="flex flex-row gap-1">
-          <Users />
-          <span>Travel together</span>
+          <Users className="text-white"/>
+          <span className="text-white">Travel together</span>
         </div>
         <div className="flex flex-row gap-1">
-          <Route />
-          <span> Smart routes</span>
+          <Route className="text-white"/>
+          <span className="text-white"> Smart routes</span>
         </div>
         <div className="flex flex-row gap-1">
-          <Shield />
-          <span>Safe rides</span>
+          <Shield className="text-white"/>
+          <span className="text-white">Safe rides</span>
         </div>
       </div>
     </div>

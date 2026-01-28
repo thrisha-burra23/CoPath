@@ -1,11 +1,17 @@
 import AppwriteAccount from "../appwrite/AuthServices";
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuthUser } from "../reactQuery/authHooks";
+import { useQueryClient } from "@tanstack/react-query";
 
-const appwriteAccount = new AppwriteAccount();
 
 const PrivateRoute = () => {
   const { data: user, isLoading } = useAuthUser();
+  const queryClient = useQueryClient();
+  const isLoggingOut = queryClient.getQueryData(["is-logging-out"]);
+
+  if (isLoggingOut) {
+    return null; 
+  }
 
   if (isLoading) {
     return <Outlet context={{ authLoading: true }} />;
