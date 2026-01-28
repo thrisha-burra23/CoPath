@@ -13,13 +13,19 @@ import VerifyEmail from "./components/auth/VerifyEmail";
 import VerifyInfo from "./components/auth/VerifyInfo";
 import OfferRide from "./pages/OfferRidePage";
 import RequestOfferRide from "./components/driver/RequestOfferRide";
+import AdminSidebar from "./components/adminDashboard/AdminSidebar";
+import AdminLayout from "./components/adminDashboard/AdminLayout";
+import AdminRoute from "./routes/AdminRoute";
+import Dashboard from "./components/adminDashboard/Dashboard";
+import Users from "./components/adminDashboard/Users";
+import DriverRequests from "./components/adminDashboard/DriverRequests";
+import Payments from "./components/adminDashboard/Payments";
 
 function App() {
   console.log("ROUTE:", window.location.pathname);
 
   return (
     <>
-    
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <Routes>
@@ -36,8 +42,19 @@ function App() {
             <Route element={<PrivateRoute />}>
               <Route path="/offer-ride" element={<OfferRide />} />
             </Route>
-            <Route element={<PrivateRoute/>}>
-              <Route path="/request-to-offer-ride" element={<RequestOfferRide/>}/>
+            <Route element={<PrivateRoute />}>
+              <Route
+                path="/request-to-offer-ride"
+                element={<RequestOfferRide />}
+              />
+            </Route>
+
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="users" element={<Users />} />
+              <Route path="driver-requests" element={<DriverRequests />} />
+              <Route path="payments" element={<Payments />} />
+              <Route />
             </Route>
           </Routes>
         </BrowserRouter>

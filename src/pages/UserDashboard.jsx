@@ -2,7 +2,7 @@ import { useOutletContext } from "react-router-dom";
 import UserDashboardSkeleton from "../loadingSkeleton/UserDashboardSkeleton";
 import Header from "../components/userDashboard/Header";
 import SearchCard from "../components/userDashboard/SearchCard";
-import Map from "../components/userDashboard/Map";
+// import Map from "../components/userDashboard/Map";
 import AvailableRides from "../components/userDashboard/RidesList";
 import { useState } from "react";
 
@@ -23,8 +23,9 @@ const UserDashboard = () => {
             <SearchCard  onSearch={setSearchData}/>
           </div>
 
-          <div className="col-span-2">
-            <Map searchData={searchData} />
+          <div className="col-span-2 border">
+            map will render
+            {/* <Map searchData={searchData} /> */}
           </div>
         </div>
 
