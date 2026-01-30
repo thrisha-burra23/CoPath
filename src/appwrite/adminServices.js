@@ -60,7 +60,7 @@ export const fetchDriverRequestsWithDetails = async () => {
             });
 
             return {
-                request: res,
+                request: req,
                 profile: profileRes.rows[0],
                 vehicle: vehicleRes.rows[0]
             };
@@ -70,10 +70,46 @@ export const fetchDriverRequestsWithDetails = async () => {
     return requests;
 }
 
-export const approveDriverRequest=async()=>{
-const result=await tablesDB.updateRow
+export const approveDriverRequest = async ({requestedId, profileId, vehicleId}) => {
+    const result1 = await tablesDB.updateRow({
+        databaseId: DATABASE_ID,
+        tableId: ADMIN_REQUEST_COLLECTION,
+        rowId: requestedId,
+        data: {
+            status: "APPROVED",
+            rejectedReason: null
+        }
+    })
+    const result2 = await tablesDB.updateRow({
+        databaseId: DATABASE_ID,
+        tableId: PROFILE_COLLECTION,
+        rowId: profileId,
+        data: { driverApproved: true }
+    })
+    const result3 = await tablesDB.updateRow({
+        databaseId: DATABASE_ID,
+        tableId: VEHICLES_COLLECTION,
+        rowId: vehicleId,
+        data: {
+            approved: true
+        }
+    })
+
+    console.log(result1, result2, result3);
+    return true;
 }
 
-export const rejectDriverRequest=async()=>{
+export const rejectDriverRequest = async ({requestedId, reason}) => {
+    const result1 = await tablesDB.updateRow({
+        databaseId: DATABASE_ID,
+        tableId: ADMIN_REQUEST_COLLECTION,
+        rowId: requestedId,
+        data: {
+            status: "REJECTED",
+            rejectedReason: reason
+        }
+    })
 
+    console.log(result1);
+    return true;
 }
