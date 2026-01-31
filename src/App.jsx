@@ -13,13 +13,14 @@ import VerifyEmail from "./components/auth/VerifyEmail";
 import VerifyInfo from "./components/auth/VerifyInfo";
 import OfferRide from "./pages/OfferRidePage";
 import RequestOfferRide from "./components/driver/RequestOfferRide";
-import AdminSidebar from "./components/adminDashboard/AdminSidebar";
+// import AdminSidebar from "./components/adminDashboard/AdminSidebar";
 import AdminLayout from "./components/adminDashboard/AdminLayout";
-import AdminRoute from "./routes/AdminRoute";
+// import AdminRoute from "./routes/AdminRoute";
 import Dashboard from "./components/adminDashboard/Dashboard";
 import Users from "./components/adminDashboard/Users";
-import DriverRequests from "./components/adminDashboard/DriverRequests";
 import Payments from "./components/adminDashboard/Payments";
+import DriverDashboard from "./pages/DriverDashboard";
+import DriverRequests from "./components/adminDashboard/DriverRequests";
 
 function App() {
   console.log("ROUTE:", window.location.pathname);
@@ -52,10 +53,13 @@ function App() {
             <Route path="/admin" element={<AdminLayout />}>
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="users" element={<Users />} />
-              <Route path="driver-requests" element={<DriverRequests />} />
+              <Route path="driver-requests" element={<DriverRequests/>} />
               <Route path="payments" element={<Payments />} />
               <Route />
             </Route>
+
+
+            <Route path="driver-dashboard" element={<DriverDashboard/>}/>
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>
