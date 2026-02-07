@@ -13,14 +13,17 @@ import VerifyEmail from "./components/auth/VerifyEmail";
 import VerifyInfo from "./components/auth/VerifyInfo";
 import OfferRide from "./pages/OfferRidePage";
 import RequestOfferRide from "./components/driver/RequestOfferRide";
-import AdminSidebar from "./components/adminDashboard/AdminSidebar";
+// import AdminSidebar from "./components/adminDashboard/AdminSidebar";
 import AdminLayout from "./components/adminDashboard/AdminLayout";
-import AdminRoute from "./routes/AdminRoute";
+// import AdminRoute from "./routes/AdminRoute";
 import Dashboard from "./components/adminDashboard/Dashboard";
 import Users from "./components/adminDashboard/Users";
-import DriverRequests from "./components/adminDashboard/DriverRequests";
 import Payments from "./components/adminDashboard/Payments";
-
+// import DriverDashboard from "./components/driver-dashboard/DriverDashboard";
+import DriverRequests from "./components/adminDashboard/DriverRequests";
+import AvailableRides from "./components/userDashboard/AvailableRIdes";
+import SearchRides from "./components/userDashboard/SearchRides";
+import RideDetails from "./components/userDashboard/RideDetails";
 function App() {
   console.log("ROUTE:", window.location.pathname);
 
@@ -37,7 +40,11 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route element={<PrivateRoute />}>
-              <Route path="/user-dashboard" element={<UserDashboard />} />
+              <Route path="/user-dashboard" element={<UserDashboard />}>
+                <Route index element={<AvailableRides />} />
+                <Route path="search" element={<SearchRides />} />
+                <Route path="rides/:rideId" element={<RideDetails />} />
+              </Route>
             </Route>
             <Route element={<PrivateRoute />}>
               <Route path="/offer-ride" element={<OfferRide />} />

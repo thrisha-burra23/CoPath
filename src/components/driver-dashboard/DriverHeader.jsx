@@ -1,22 +1,20 @@
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import logo from "../../assets/logo.png";
 import { UserRound } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useLogout } from "@/src/reactQuery/authHooks";
+import { useNavigate } from "react-router-dom";
 
-const Header = () => {
-  const { user } = useOutletContext();
-  const logoutMutation = useLogout();
+const DriverHeader = () => {
+    const logoutMutation = useLogout();
   const navigate = useNavigate();
 
   const handleLogout = () => {
     console.log("logout clicked");
     logoutMutation.mutate();
   };
-
   return (
-    <header className=" flex justify-between items-center px-8 py-6">
-      <div className="flex flex-row items-center justify-center  ">
+     <header className="bg-white border-b px-8 py-4 flex justify-between items-center">
+        <div className="flex flex-row items-center justify-center  ">
         <img src={logo} alt="CoPath" className="w-12 h-12 mb-2" />
         <div className="flex flex-col items-center text-center mb-2">
           <h1 className="text-3xl font-bold text-black">
@@ -31,17 +29,14 @@ const Header = () => {
       <div className="flex flex-row gap-6 justify-center items-center">
         <Button variant="ghost" onClick={() => navigate("/user-dashboard")}>
           Find Ride
-        </Button>
-        <Button variant="outline" onClick={() => navigate("/offer-ride")}>
-          Offer a Ride
-        </Button>
+        </Button>        
         <UserRound />
         <Button variant="outline" onClick={handleLogout}>
           Logout{" "}
         </Button>
       </div>
-    </header>
-  );
-};
+     </header>
+  )
+}
 
-export default Header;
+export default DriverHeader
