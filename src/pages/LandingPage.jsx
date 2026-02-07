@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import bgImage from "../assets/bgImage.png";
 import logo from "../assets/logo.png";
-import LandingHeader from "../components/LandingHeader";
+import LandingHeader from "../components/landingPage/LandingHeader";
 import { IndianRupee,  Route, Shield, Users } from "lucide-react";
 import SearchCardOriginal from "../components/userDashboard/SearchCardOriginal";
 

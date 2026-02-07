@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
-import { fetchRoute } from "../api/map"
+import { fetchRoute, fetchSuggestions } from "../api/map"
+import { useEffect, useState } from "react"
 
 export const useRoute = (searchData) => {
     return useQuery({
@@ -7,4 +8,26 @@ export const useRoute = (searchData) => {
         queryFn: fetchRoute,
         enabled: ! !searchData
     })
+}
+
+export const useLocationSuggestions=(query)=>{
+    return useQuery({
+        queryKey:["location-suggestions",query],
+        queryFn:fetchSuggestions,
+        enabled:query.length>=2,
+        staleTime:1000*60*5
+    })
+}
+
+export const useDebounce = (value, delay = 400) => {
+    const [debounceValue, setDebounceValue] = useState(value);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebounceValue(debounceValue);
+        }, delay);
+
+        return ()=>clearInterval(timer);
+    }, [delay, value]);
+
+    return debounceValue
 }

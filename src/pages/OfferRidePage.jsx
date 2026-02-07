@@ -7,8 +7,9 @@ import {
 } from "../reactQuery/adminRequestHooks";
 import RequestPending from "../components/driver/RequestPending";
 import RequestOfferRide from "../components/driver/RequestOfferRide";
-import OfferRideCard from "../components/driver/OfferRideCard";
+import OfferRideCard from "../components/driver-dashboard/OfferRideCard";
 import { useCreateVehicle } from "../reactQuery/vehicleHooks";
+import DriverDashboard from "../components/driver-dashboard/DriverDashboard";
 
 const OfferRide = () => {
   const { user } = useOutletContext();
@@ -56,8 +57,8 @@ const OfferRide = () => {
 
   return (
     <>
-      <Header />
-      <OfferRideCard />
+     
+     <DriverDashboard/>
     </>
   );
 };

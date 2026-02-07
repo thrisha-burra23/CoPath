@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useCreateAccount } from "../reactQuery/authHooks";
 import { useState } from "react";
-import FailedAlert from "../components/FailedAlert";
+import FailedAlert from "../components/landingPage/FailedAlert";
 import RegisterSkeleton from "../loadingSkeleton/RegisterSkeleton";
 
 function Register() {

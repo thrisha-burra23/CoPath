@@ -2,69 +2,46 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { useOutletContext } from "react-router-dom";
+import { usePassengerRequest } from "@/src/reactQuery/passengerRequestHooks";
+import { useDriverRides } from "@/src/reactQuery/rideHooks";
+import DriverHeader from "./DriverHeader";
+import DriverStats from "./DriverStats";
+import DriverRides from "./DriverRides";
+import PassengerRequests from "./PassengerRequests";
+import DriverEarnings from "./DriverEarnings";
+import OfferRide from "@/src/pages/OfferRidePage";
+import OfferRideCard from "./OfferRideCard";
 
 export default function DriverDashboard() {
+  const { user } = useOutletContext();
+  const { data: ridesData } = useDriverRides(user?.$id);
+  const { data: requestsData } = usePassengerRequest(user?.$id);
+
+  const rides = ridesData?.rows || [];
+  const requests = requestsData?.rows || [];
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* ================= Header ================= */}
-      <header className="bg-white border-b px-8 py-4 flex items-center justify-between">
-        <h1 className="text-xl font-semibold text-gray-800">CoPath 🚗</h1>
-
-        <nav className="flex items-center gap-6 text-sm text-gray-600">
-          <span className="font-medium text-gray-900">Dashboard</span>
-          <span>My Rides</span>
-          <span>Earnings</span>
-          <span>Reviews</span>
-        </nav>
-
-        <div className="flex items-center gap-3">
-          <Badge variant="secondary">Driver Mode</Badge>
-          <span className="text-sm font-medium">Rahul</span>
-        </div>
-      </header>
+      <DriverHeader user={user} />
 
       {/* ================= Main ================= */}
       <main className="p-8 space-y-8">
         {/* Welcome */}
         <div>
           <h2 className="text-2xl font-semibold text-gray-800">
-            Good Morning, Rahul 👋
+            Welcome {user.$Name || "Driver"} 👋
           </h2>
           <p className="text-gray-500">
             Manage your rides, passengers, and earnings.
           </p>
         </div>
 
-        {/* ================= Stats ================= */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-sm text-gray-500">
-                🚗 Active Rides
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-2xl font-bold">2</CardContent>
-          </Card>
+        <DriverStats rides={rides} requests={requests} />
+        <DriverRides rides={rides} />
+        <PassengerRequests rides={rides} requests={requests} />
+        <DriverEarnings rides={rides} />
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-sm text-gray-500">
-                👥 Passengers Today
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-2xl font-bold">5</CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-sm text-gray-500">
-                💰 Earnings Today
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-2xl font-bold">₹1,250</CardContent>
-          </Card>
-        </div>
-
+        {/* <OfferRideCard/> */}
         {/* ================= Offer Ride ================= */}
         <Card>
           <CardHeader>
@@ -131,8 +108,12 @@ export default function DriverDashboard() {
             <CardTitle>💰 Earnings</CardTitle>
           </CardHeader>
           <CardContent className="text-sm space-y-2">
-            <p>This Week: <strong>₹3,450</strong></p>
-            <p>This Month: <strong>₹12,200</strong></p>
+            <p>
+              This Week: <strong>₹3,450</strong>
+            </p>
+            <p>
+              This Month: <strong>₹12,200</strong>
+            </p>
             <p className="text-gray-500">Last payout: ₹2,000 (12 Feb 2026)</p>
           </CardContent>
         </Card>
@@ -154,14 +135,16 @@ function RideRow({ route, date, seats, price, status }) {
     status === "Active"
       ? "bg-green-100 text-green-700"
       : status === "Upcoming"
-      ? "bg-blue-100 text-blue-700"
-      : "bg-gray-100 text-gray-600";
+        ? "bg-blue-100 text-blue-700"
+        : "bg-gray-100 text-gray-600";
 
   return (
     <div className="flex items-center justify-between border rounded-lg p-3">
       <div>
         <p className="font-medium">{route}</p>
-        <p className="text-gray-500 text-xs">{date} • {seats} seats • {price}</p>
+        <p className="text-gray-500 text-xs">
+          {date} • {seats} seats • {price}
+        </p>
       </div>
       <Badge className={statusColor}>{status}</Badge>
     </div>

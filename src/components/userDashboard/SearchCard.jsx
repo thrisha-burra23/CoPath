@@ -3,10 +3,14 @@ import { Input } from "@/components/ui/input";
 import { fetchSuggestions } from "@/src/api/map";
 import { useAuthUser } from "@/src/reactQuery/authHooks";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SearchCard({ onSearch }) {
   const { data: user, isLoading } = useAuthUser();
   const isDisabled = isLoading || !user;
+  const navigate=useNavigate();
+
+  
 
   const [startText, setStartText] = useState("");
   const [endText, setEndText] = useState("");
@@ -52,6 +56,14 @@ export default function SearchCard({ onSearch }) {
       endLocation,
       date,
     });
+
+    const params = new URLSearchParams({
+      start: startLocation.label,
+      end: endLocation.label,
+    });
+    if (data) params.append("date", date);
+
+    navigate(`/user-dashboard/search?${params.toString()}`)
   };
 
   return (
@@ -116,12 +128,12 @@ export default function SearchCard({ onSearch }) {
 
       <Button
         onClick={handleSearch}
-        className="w-full text-white bg-[linear-gradient(135deg,#22D3EE,#38BDF8,#2563EB)]" variant="outline"
+        className="w-full text-white bg-[linear-gradient(135deg,#22D3EE,#38BDF8,#2563EB)]"
+        variant="outline"
         disabled={isDisabled || !startLocation || !endLocation}
       >
         Search Ride
       </Button>
     </div>
-    
   );
 }
