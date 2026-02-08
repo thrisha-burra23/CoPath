@@ -37,3 +37,15 @@ export const updatePassengerRequestStatus = async (id, status) => {
     });
     return result
 }
+
+export const getPassergerRequestByRideAndUser = async ({ rideId, passengerId }) => {
+    const result = tablesDB.listRows({
+        databaseId: DATABASE_ID,
+        tableId: PASSENGER_REQUEST_COLLECTION,
+        queries: [
+            Query.equal("rideId", rideId),
+            Query.equal("passengerId", passengerId)
+        ]
+    })
+    return result.rows[0] || []
+}

@@ -28,8 +28,7 @@ const OfferRideCard = () => {
       setStartSuggestions([]);
       return;
     }
-    const data = await fetchSuggestions(value);
-    setStartSuggestions(data);
+    setStartSuggestions(await fetchSuggestions(value));
   };
 
   const handleEndChange = async (value) => {
@@ -40,12 +39,14 @@ const OfferRideCard = () => {
       setEndSuggestions([]);
       return;
     }
-    const data = await fetchSuggestions(value);
-    setEndSuggestions(data);
+    setEndSuggestions(await fetchSuggestions(value));
   };
 
   const handleSubmit = () => {
     if (!startLocation || !endLocation || !date || !time) return;
+
+    // ✅ Combine date + time into ONE datetime
+    const rideDateTime = new Date(`${date}T${time}`).toISOString();
 
     createRideMutation.mutate({
       driverId: user.$id,
@@ -55,8 +56,7 @@ const OfferRideCard = () => {
       endLabel: endLocation.label,
       endLat: endLocation.lat,
       endLng: endLocation.lng,
-      date: new Date(date).toISOString(),
-      time,
+      time: rideDateTime, // ✅ matches DB schema
       availableSeats: Number(seats),
       price: Number(price || 0),
       status: "ACTIVE",
@@ -64,90 +64,95 @@ const OfferRideCard = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-6 space-y-4">
-      <h2 className="text-2xl font-semibold text-center">Offer a Ride</h2>
+    <div className="bg-white border rounded-xl p-6 space-y-5 h-full">
 
-      <div className="relative">
-        <Input
-          placeholder="Start Location"
-          value={startText}
-          onChange={(e) => handleStartChange(e.target.value)}
-        />
-        {startSuggestions.length > 0 && (
-          <div className="absolute w-full bg-white border rounded shadow z-10">
-            {startSuggestions.map((item) => (
-              <div
-                key={item.label}
-                className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
-                onClick={() => {
-                  setStartText(item.label);
-                  setStartLocation(item);
-                  setStartSuggestions([]);
-                }}
-              >
-                {item.label}
-              </div>
-            ))}
-          </div>
-        )}
+      <h2 className="text-lg font-semibold flex items-center gap-2">
+        ➕ Offer a New Ride
+      </h2>
+
+      {/* From / To */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="relative">
+          <Input
+            placeholder="From (e.g. Bangalore)"
+            value={startText}
+            onChange={(e) => handleStartChange(e.target.value)}
+          />
+          {startSuggestions.length > 0 && (
+            <div className="absolute z-10 w-full bg-white border rounded shadow">
+              {startSuggestions.map((item) => (
+                <div
+                  key={item.label}
+                  className="px-3 py-2 cursor-pointer hover:bg-gray-100"
+                  onClick={() => {
+                    setStartText(item.label);
+                    setStartLocation(item);
+                    setStartSuggestions([]);
+                  }}
+                >
+                  {item.label}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="relative">
+          <Input
+            placeholder="To (e.g. Chennai)"
+            value={endText}
+            onChange={(e) => handleEndChange(e.target.value)}
+          />
+          {endSuggestions.length > 0 && (
+            <div className="absolute z-10 w-full bg-white border rounded shadow">
+              {endSuggestions.map((item) => (
+                <div
+                  key={item.label}
+                  className="px-3 py-2 cursor-pointer hover:bg-gray-100"
+                  onClick={() => {
+                    setEndText(item.label);
+                    setEndLocation(item);
+                    setEndSuggestions([]);
+                  }}
+                >
+                  {item.label}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
-      <div className="relative">
-        <Input
-          placeholder="End Location"
-          value={endText}
-          onChange={(e) => handleEndChange(e.target.value)}
-        />
-        {endSuggestions.length > 0 && (
-          <div className="absolute w-full bg-white border rounded shadow z-10">
-            {endSuggestions.map((item) => (
-              <div
-                key={item.label}
-                className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
-                onClick={() => {
-                  setEndText(item.label);
-                  setEndLocation(item);
-                  setEndSuggestions([]);
-                }}
-              >
-                {item.label}
-              </div>
-            ))}
-          </div>
-        )}
+      {/* Date / Time */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+        <Input type="time" value={time} onChange={(e) => setTime(e.target.value)} />
       </div>
 
-      <Input
-        type="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-      />
-      <Input
-        type="time"
-        value={time}
-        onChange={(e) => setTime(e.target.value)}
-      />
-      <Input
-        type="number"
-        min={1}
-        placeholder="Available Seats"
-        value={seats}
-        onChange={(e) => setSeats(e.target.value)}
-      />
-      <Input
-        type="number"
-        min={0}
-        placeholder="Price per seat (optional)"
-        value={price}
-        onChange={(e) => setPrice(e.target.value)}
-      />
+      {/* Seats / Price */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Input
+          type="number"
+          min={1}
+          placeholder="Seats Available"
+          value={seats}
+          onChange={(e) => setSeats(e.target.value)}
+        />
+        <Input
+          type="number"
+          min={0}
+          placeholder="Price per Seat (₹)"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+        />
+      </div>
 
       <Button
         className="w-full"
         onClick={handleSubmit}
         disabled={createRideMutation.isPending}
       >
-        {createRideMutation.isPending ? "Posting..." : "Post Ride"}
+        {createRideMutation.isPending ? "Publishing..." : "Publish Ride"}
       </Button>
     </div>
   );

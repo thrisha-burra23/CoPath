@@ -10,7 +10,6 @@ import DriverStats from "./DriverStats";
 import DriverRides from "./DriverRides";
 import PassengerRequests from "./PassengerRequests";
 import DriverEarnings from "./DriverEarnings";
-import OfferRide from "@/src/pages/OfferRidePage";
 import OfferRideCard from "./OfferRideCard";
 
 export default function DriverDashboard() {
@@ -29,100 +28,30 @@ export default function DriverDashboard() {
         {/* Welcome */}
         <div>
           <h2 className="text-2xl font-semibold text-gray-800">
-            Welcome {user.$Name || "Driver"} 👋
+            Welcome {user.name || "Driver"} 👋
           </h2>
           <p className="text-gray-500">
             Manage your rides, passengers, and earnings.
           </p>
         </div>
 
-        <DriverStats rides={rides} requests={requests} />
-        <DriverRides rides={rides} />
-        <PassengerRequests rides={rides} requests={requests} />
-        <DriverEarnings rides={rides} />
+        <div className="grid grid-cols-1 lg:grid-cols-10 gap-6">
+          {/* Offer Ride - 60% */}
+          <div className="lg:col-span-6">
+            <OfferRideCard />
+          </div>
 
-        {/* <OfferRideCard/> */}
-        {/* ================= Offer Ride ================= */}
-        <Card>
-          <CardHeader>
-            <CardTitle>➕ Offer a New Ride</CardTitle>
-          </CardHeader>
-          <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input placeholder="From (e.g. Bangalore)" />
-            <Input placeholder="To (e.g. Chennai)" />
-            <Input type="date" />
-            <Input type="time" />
-            <Input placeholder="Seats Available" />
-            <Input placeholder="Price per Seat (₹)" />
-
-            <div className="md:col-span-2">
-              <Button className="w-full">Publish Ride</Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* ================= My Rides ================= */}
-        <Card>
-          <CardHeader>
-            <CardTitle>📋 My Rides</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3 text-sm">
-            <RideRow
-              route="Bangalore → Chennai"
-              date="20 Feb"
-              seats="3"
-              price="₹450"
-              status="Active"
-            />
-            <RideRow
-              route="Bangalore → Mysore"
-              date="22 Feb"
-              seats="2"
-              price="₹300"
-              status="Upcoming"
-            />
-            <RideRow
-              route="Chennai → Bangalore"
-              date="10 Feb"
-              seats="4"
-              price="₹500"
-              status="Completed"
-            />
-          </CardContent>
-        </Card>
-
-        {/* ================= Passenger Requests ================= */}
-        <Card>
-          <CardHeader>
-            <CardTitle>👥 Passenger Requests</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3 text-sm">
-            <PassengerRow name="Ankit Sharma" rating="4.5" seats="1" />
-            <PassengerRow name="Priya Verma" rating="4.8" seats="2" />
-          </CardContent>
-        </Card>
-
-        {/* ================= Earnings ================= */}
-        <Card>
-          <CardHeader>
-            <CardTitle>💰 Earnings</CardTitle>
-          </CardHeader>
-          <CardContent className="text-sm space-y-2">
-            <p>
-              This Week: <strong>₹3,450</strong>
-            </p>
-            <p>
-              This Month: <strong>₹12,200</strong>
-            </p>
-            <p className="text-gray-500">Last payout: ₹2,000 (12 Feb 2026)</p>
-          </CardContent>
-        </Card>
-
-        {/* ================= Footer Actions ================= */}
-        <div className="flex justify-between">
-          <Button variant="outline">Switch to User Mode</Button>
-          <Button variant="destructive">Logout</Button>
+          {/* Passenger Requests - 40% */}
+          <div className="lg:col-span-4">
+            <PassengerRequests rides={rides} requests={requests} />
+          </div>
         </div>
+
+        <DriverStats rides={rides} requests={requests} />
+
+        <DriverRides rides={rides} />
+
+        <DriverEarnings rides={rides} />
       </main>
     </div>
   );

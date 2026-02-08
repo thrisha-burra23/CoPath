@@ -3,7 +3,7 @@ import { createRide, fetchAllAvailableRides, fetchRideDetails, fetchRidesByDrive
 import { toast } from "react-toastify";
 
 export const useCreateRide = () => {
-    useMutation({
+   return  useMutation({
         mutationFn: async (data) => {
             if (!data?.driverId) {
                 throw new Error("Unauthorized: Driver not found")

@@ -1,26 +1,50 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useAuthUser } from "@/src/reactQuery/authHooks";
+import {
+  useCreatePassengerRequest,
+  usePassengerBookingStatus,
+} from "@/src/reactQuery/passengerRequestHooks";
 import { useRideDetils } from "@/src/reactQuery/rideHooks";
 import { X } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const RideDetails = () => {
   const { rideId } = useParams();
-  const { data, isLoading, error } = useRideDetils(rideId);
+  const ridequery = useRideDetils(rideId);
   const navigate = useNavigate();
+  const { data: user } = useAuthUser();
 
-  if (isLoading) return <p className="text-center mt-10">Loading…</p>;
-  if (error || !data)
-    return <p className="text-center mt-10 text-red-500">Failed to load ride details</p>;
+  const { data: booking } = usePassengerBookingStatus(rideId, user?.$id);
+  const bookMutation = useCreatePassengerRequest();
 
-  const { ride, driver, vehicle } = data;
+  if (ridequery.isLoading) return <p>Loading........</p>;
+
+  if (ridequery.error || !ridequery.data)
+    return (
+      <p className="text-center mt-10 text-red-500">
+        Failed to load ride details
+      </p>
+    );
+
+  const { ride, driver, vehicle } = ridequery.data;
+
   const rideDate = new Date(ride.time);
+
+  const handleBooking = () => {
+    bookMutation.mutate({
+      rideId: ride.$id,
+      driverId: ride.driverId,
+      passengerId: user.$id,
+      passengerName: user.name,
+      seats_requested: 1,
+    });
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
       <Card className="w-full max-w-md shadow-md bg-white">
         <CardContent className="p-6 space-y-6">
-          
           {/* ================= Header ================= */}
           <div className="flex items-start justify-between">
             <div>
@@ -46,7 +70,7 @@ const RideDetails = () => {
               onClick={() => navigate(-1)}
               className="text-gray-500 hover:text-gray-900"
             >
-              <X size={18}  color="red" />
+              <X size={18} color="red" />
             </Button>
           </div>
 
@@ -71,7 +95,6 @@ const RideDetails = () => {
 
           {/* ================= Driver & Vehicle ================= */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
-            
             {driver && (
               <div className="space-y-2">
                 <p className="font-semibold text-gray-900">Driver</p>
@@ -103,16 +126,38 @@ const RideDetails = () => {
                 </div>
               </div>
             )}
-
           </div>
 
           {/* ================= CTA ================= */}
-          <div className="pt-2">
-            <Button className="w-full h-11 text-base font-semibold">
-              Book This Ride
-            </Button>
-          </div>
+          <div className="pt-4">
+            {!booking && (
+              <Button
+                className="w-full h-11 text-base font-semibold"
+                onClick={handleBooking}
+                disabled={ride.availableSeats === 0}
+              >
+                Book This Ride
+              </Button>
+            )}
 
+            {booking?.status === "PENDING" && (
+              <p className="text-yellow-600 font-medium">
+                ⏳ Request sent. Waiting for driver approval.
+              </p>
+            )}
+
+            {booking?.status === "APPROVED" && (
+              <p className="text-green-600 font-medium">
+                ✅ Booking confirmed! Enjoy your ride.
+              </p>
+            )}
+
+            {booking?.status === "REJECTED" && (
+              <p className="text-red-600 font-medium">
+                ❌ Driver rejected your request.
+              </p>
+            )}
+          </div>
         </CardContent>
       </Card>
     </div>

@@ -9,9 +9,9 @@ const DriverRides = ({ rides }) => {
       </CardHeader>
       <CardContent className="space-y-3 text-sm">
         {rides.length === 0 && <p className="text-gray-500">No rides yet</p>}
-        {rides.map((ride) => {
-          <DriverRideRow key={ride.$id} ride={ride} />;
-        })}
+        {rides.map((ride) => (
+          <DriverRideRow key={ride.$id} ride={ride} />
+        ))}
       </CardContent>
     </Card>
   );
