@@ -58,10 +58,10 @@ export default function SearchCard({ onSearch }) {
     });
 
     const params = new URLSearchParams({
-      start: startLocation.label,
-      end: endLocation.label,
+      start: startLocation.label.split(",")[0],
+      end: endLocation.label.split(",")[0],
     });
-    if (data) params.append("date", date);
+    if (date) params.append("date", date);
 
     navigate(`/user-dashboard/search?${params.toString()}`)
   };

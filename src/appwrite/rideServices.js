@@ -45,7 +45,6 @@ export const fetchRidesByDriver = async (driverId) => {
 }
 
 export const fetchAllAvailableRides = async () => {
-    const nowISO = new Date().toISOString();
     const result = await tablesDB.listRows({
         databaseId: DATABASE_ID,
         tableId: RIDES_COLLECTION_ID,
@@ -58,17 +57,42 @@ export const fetchAllAvailableRides = async () => {
     return result.rows ?? [];
 }
 
-export const searchRides = async () => {
-    const result = await tablesDB.listRows({
-        databaseId: DATABASE_ID,
-        tableId: RIDES_COLLECTION_ID,
-        queries: [
-            Query.equal("status", "ACTIVE"),
-            Query.greaterThan("availableSeats", 0),
-            Query.greaterThanEqual("date", new Date().toISOString())
-        ]
-    })
-}
+export const searchRides = async ({ start, end, date }) => {
+  const result = await tablesDB.listRows({
+    databaseId: DATABASE_ID,
+    tableId: RIDES_COLLECTION_ID,
+    queries: [
+      Query.equal("status", "ACTIVE"),
+      Query.greaterThan("availableSeats", 0),
+      Query.greaterThan("time", new Date().toISOString()),
+    ],
+  });
+
+  let rides = result.rows ?? [];
+
+  rides = rides.filter((ride) => {
+    const startMatch = ride.startLabel
+      ?.toLowerCase()
+      .includes(start.toLowerCase());
+
+    const endMatch = ride.endLabel
+      ?.toLowerCase()
+      .includes(end.toLowerCase());
+
+    return startMatch && endMatch;
+  });
+
+  if (date) {
+    const selectedDate = new Date(date).toDateString();
+    rides = rides.filter(
+      (ride) =>
+        new Date(ride.time).toDateString() === selectedDate
+    );
+  }
+
+  return rides;
+};
+
 
 export const fetchRideDetails = async (rideId) => {
     const rideRes = await tablesDB.getRow({

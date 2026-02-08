@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { createRide, fetchAllAvailableRides, fetchRideDetails, fetchRidesByDriver } from "../appwrite/rideServices"
+import { createRide, fetchAllAvailableRides, fetchRideDetails, fetchRidesByDriver, searchRides } from "../appwrite/rideServices"
 import { toast } from "react-toastify";
 
 export const useCreateRide = () => {
@@ -44,5 +44,13 @@ export const useRideDetils = (rideId) => {
         queryKey: ["ride-details", rideId],
         queryFn: () => fetchRideDetails(rideId),
         enabled: !!rideId
+    })
+}
+
+export const useSearchRides = ({ start, end, date }) => {
+    return useQuery({
+        queryKey: ["search-rides", start, end, date],
+        queryFn: () => searchRides({ start, end, date }),
+        enabled: !!start && !!end
     })
 }
