@@ -12,27 +12,32 @@ import { Label } from "@/components/ui/label";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthUser, useLogin } from "../reactQuery/authHooks";
 import LoginSkeleton from "../loadingSkeleton/LoginSkeleton";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import DashboardSkeleton from "../loadingSkeleton/DashboardSkeleton";
+import { useProfile } from "../reactQuery/profileHooks";
 
 function Login() {
   const loginMutate = useLogin();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate=useNavigate();
-  const {data:user,isLoading}=useAuthUser();
+  const navigate = useNavigate();
+  const { data: user, isLoading } = useAuthUser();
+  const {data:profile,isLoading:profileLoading}=useProfile(user?.$id);
 
-  useEffect(()=>{
-    if(isLoading) return;
+  useEffect(() => {
+    if (isLoading) return;
 
-    if(user){
-      if(!user.emailVerification){
-        navigate("/verify-info")
-      }else{
-        navigate("/user-dashboard")
+    if (user) {
+      if (!user.emailVerification) {
+        navigate("/verify-info");
+      } else if (profile?.role === "ADMIN") {
+        navigate("/admin");
+      } else {
+        navigate("/user-dashboard");
       }
     }
-  },[user,navigate,isLoading])
-  
+  }, [user, profile, navigate, isLoading, profileLoading]);
+
   const handleLogin = (event) => {
     event.preventDefault();
     console.log("login clicked");
@@ -42,14 +47,14 @@ function Login() {
   if (loginMutate.isPending) {
     return (
       <Card className="w-full max-w-sm">
-        <LoginSkeleton />
+        <DashboardSkeleton />
       </Card>
     );
   }
 
-if(user){
-  return null;
-}
+  if (user) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center">

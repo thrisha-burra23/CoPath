@@ -1,17 +1,19 @@
 import React from "react";
 import { useAuthUser } from "../reactQuery/authHooks";
 import { Navigate, Outlet } from "react-router-dom";
+import { useProfile } from "../reactQuery/profileHooks";
 
 const AdminRoute = () => {
-  const { user, isLoading } = useAuthUser();
+  const { data:user, isLoading:userLoading } = useAuthUser();
+  const {data:profile,isLoading:profileLoading}=useProfile(user?.$id)
 
-  if (isLoading) return null;
+  if (userLoading || profileLoading) return null;
 
   if (!user) {
     return <Navigate to="/login" replace />;
   }
 
-  if (user.role !== "ADMIN") {
+  if (profile?.role !== "ADMIN") {
     return <Navigate to="/" replace />;
   }
 

@@ -27,6 +27,7 @@ import RideDetails from "./components/userDashboard/RideDetails";
 import AuthLayout from "./components/layout/AuthLayout";
 import MyBookingsPage from "./pages/MyBookingsPage";
 import ChatPage from "./pages/ChatPage";
+import AdminRoute from "./routes/AdminRoute";
 function App() {
   console.log("ROUTE:", window.location.pathname);
 
@@ -64,12 +65,13 @@ function App() {
               </Route>
             </Route>
 
-            <Route path="/admin" element={<AdminLayout />}>
-              <Route path="dashboard" element={<Dashboard />} />
-              <Route path="users" element={<Users />} />
-              <Route path="driver-requests" element={<DriverRequests />} />
-              <Route path="payments" element={<Payments />} />
-              <Route />
+            <Route element={<AdminRoute />}>
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="users" element={<Users />} />
+                <Route path="driver-requests" element={<DriverRequests />} />
+                <Route path="payments" element={<Payments />} />
+              </Route>
             </Route>
           </Routes>
         </BrowserRouter>

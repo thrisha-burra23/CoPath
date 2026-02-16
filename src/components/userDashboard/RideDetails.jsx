@@ -7,6 +7,7 @@ import {
 } from "@/src/reactQuery/passengerRequestHooks";
 import { useRideDetils } from "@/src/reactQuery/rideHooks";
 import { X } from "lucide-react";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const RideDetails = () => {
@@ -14,6 +15,8 @@ const RideDetails = () => {
   const ridequery = useRideDetils(rideId);
   const navigate = useNavigate();
   const { data: user } = useAuthUser();
+  
+  const [seats, setSeats] = useState(1);
 
   const { data: booking } = usePassengerBookingStatus(rideId, user?.$id);
   const bookMutation = useCreatePassengerRequest();
@@ -32,12 +35,13 @@ const RideDetails = () => {
   const rideDate = new Date(ride.time);
 
   const handleBooking = () => {
+     if (seats < 1 || seats > ride.availableSeats) return;
     bookMutation.mutate({
       rideId: ride.$id,
       driverId: ride.driverId,
       passengerId: user.$id,
       passengerName: user.name,
-      seats_requested: 1,
+      seats_requested: seats,
     });
   };
 
@@ -126,6 +130,24 @@ const RideDetails = () => {
                 </div>
               </div>
             )}
+          </div>
+          {/* ================= Seat Selection ================= */}
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-gray-600">Select Seats</span>
+
+            <input
+              type="number"
+              min="1"
+              max={ride.availableSeats}
+              value={seats}
+              onChange={(e) => {
+                const value = Number(e.target.value);
+                if (value >= 1 && value <= ride.availableSeats) {
+                  setSeats(value);
+                }
+              }}
+              className="w-16 border rounded px-2 py-1 text-center"
+            />
           </div>
 
           {/* ================= CTA ================= */}
