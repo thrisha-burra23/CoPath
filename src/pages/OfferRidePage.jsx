@@ -17,7 +17,7 @@ const OfferRide = () => {
   const { data: profile, isLoading } = useProfile(user?.$id);
   const { data: driverRequest } = useDriverRequest(user?.$id);
   const createDriverRequestMutation = useCreateDriverRequest();
-  const createVehicleMutation = useCreateVehicle();
+  const createVehicleMutation = useCreateVehicle(); 
 
   if (isLoading) {
     return (
@@ -32,8 +32,7 @@ const OfferRide = () => {
   if (!profile?.driverApproved && driverRequest) {
     return (
       <>
-      <Header/>
-        <RequestPending />
+              <RequestPending />
       </>
     );
   }
@@ -56,8 +55,7 @@ const OfferRide = () => {
   }
 
   return (
-    <>
-     
+    <>     
      <DriverDashboard/>
     </>
   );

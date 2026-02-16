@@ -24,6 +24,9 @@ import DriverRequests from "./components/adminDashboard/DriverRequests";
 import AvailableRides from "./components/userDashboard/AvailableRIdes";
 import SearchRides from "./components/userDashboard/SearchRides";
 import RideDetails from "./components/userDashboard/RideDetails";
+import AuthLayout from "./components/layout/AuthLayout";
+import MyBookingsPage from "./pages/MyBookingsPage";
+import ChatPage from "./pages/ChatPage";
 function App() {
   console.log("ROUTE:", window.location.pathname);
 
@@ -39,21 +42,26 @@ function App() {
             <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
+
             <Route element={<PrivateRoute />}>
-              <Route path="/user-dashboard" element={<UserDashboard />}>
-                <Route index element={<AvailableRides />} />
-                <Route path="search" element={<SearchRides />} />
-                <Route path="rides/:rideId" element={<RideDetails />} />
+              <Route element={<AuthLayout />}>
+                <Route path="/user-dashboard" element={<UserDashboard />}>
+                  <Route index element={<AvailableRides />} />
+                  <Route path="search" element={<SearchRides />} />
+                  <Route path="rides/:rideId" element={<RideDetails />} />
+                </Route>
+
+                <Route path="/offer-ride" element={<OfferRide />} />
+                <Route
+                  path="/request-to-offer-ride"
+                  element={<RequestOfferRide />}
+                />
+                <Route path="/my-bookings" element={<MyBookingsPage />} />
+                <Route
+                  path="/chat/:rideId/:otherUserId"
+                  element={<ChatPage />}
+                />
               </Route>
-            </Route>
-            <Route element={<PrivateRoute />}>
-              <Route path="/offer-ride" element={<OfferRide />} />
-            </Route>
-            <Route element={<PrivateRoute />}>
-              <Route
-                path="/request-to-offer-ride"
-                element={<RequestOfferRide />}
-              />
             </Route>
 
             <Route path="/admin" element={<AdminLayout />}>

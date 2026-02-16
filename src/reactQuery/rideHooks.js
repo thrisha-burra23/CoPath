@@ -1,9 +1,9 @@
-import { useMutation, useQuery } from "@tanstack/react-query"
-import { createRide, fetchAllAvailableRides, fetchRideDetails, fetchRidesByDriver, searchRides } from "../appwrite/rideServices"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { completeRidesAndRelease, createRide, fetchAllAvailableRides, fetchRideDetails, fetchRidesByDriver, searchRides } from "../appwrite/rideServices"
 import { toast } from "react-toastify";
 
 export const useCreateRide = () => {
-   return  useMutation({
+    return useMutation({
         mutationFn: async (data) => {
             if (!data?.driverId) {
                 throw new Error("Unauthorized: Driver not found")
@@ -52,5 +52,20 @@ export const useSearchRides = ({ start, end, date }) => {
         queryKey: ["search-rides", start, end, date],
         queryFn: () => searchRides({ start, end, date }),
         enabled: !!start && !!end
+    })
+}
+
+export const useCompleteRide = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: completeRidesAndRelease,
+        onSuccess: () => {
+            toast.success("Ride completed. Earnings released!");
+            queryClient.invalidateQueries(["driver-rides"]);
+            queryClient.invalidateQueries(["profile"]);
+        },
+        onError: (err) => {
+            toast.error(err.message || "Failed to complete ride");
+        }
     })
 }

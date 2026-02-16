@@ -1,21 +1,49 @@
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import { UserRound } from "lucide-react";
+import { Home, UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useLogout } from "@/src/reactQuery/authHooks";
+import { useProfile } from "@/src/reactQuery/profileHooks";
 
-const Header = () => {
-  const { user } = useOutletContext();
-  const logoutMutation = useLogout();
+const Header = ({ user, onProfileClick }) => {
+  const location = useLocation();
   const navigate = useNavigate();
+  const { data: profile } = useProfile(user?.$id);
+  const isDriverArea = location.pathname.includes("offer-ride");
+  const isDriverApproved = profile?.driverApproved;
 
-  const handleLogout = () => {
-    console.log("logout clicked");
-    logoutMutation.mutate();
+  const renderButton = () => {
+    if (isDriverArea) {
+      return (
+        <>
+          <Button onClick={() => navigate("/user-dashboard")} variant="outline">
+            Find a Ride
+          </Button>
+        </>
+      );
+    }
+    if (!isDriverApproved) {
+      return (
+        <>
+          <Button
+            variant="outline"
+            onClick={() => navigate("/request-to-offer-ride")}
+          >
+            Offer a Ride
+          </Button>
+        </>
+      );
+    }
+    return (
+      <>
+        <Button variant="outline" onClick={() => navigate("/offer-ride")}>
+          Offer a Ride
+        </Button>
+      </>
+    );
   };
 
   return (
-    <header className=" flex justify-between items-center px-8 py-6">
+    <header className=" flex justify-between items-center px-8 py-6 bg-blue-50">
       <div className="flex flex-row items-center justify-center  ">
         <img src={logo} alt="CoPath" className="w-12 h-12 mb-2" />
         <div className="flex flex-col items-center text-center mb-2">
@@ -28,16 +56,17 @@ const Header = () => {
           <p className="text-lg text-black/80 ">Smarter Carpooling</p>
         </div>
       </div>
+      <div className="font-serif text-2xl">Welcome {user.name}</div>
       <div className="flex flex-row gap-6 justify-center items-center">
-        <Button variant="ghost" onClick={() => navigate("/user-dashboard")}>
-          Find Ride
+        <Button onClick={() => navigate("/user-dashboard")}>
+          <Home />
         </Button>
-        <Button variant="outline" onClick={() => navigate("/offer-ride")}>
-          Offer a Ride
+        {renderButton()}
+        <Button variant="outline" onClick={() => navigate("/my-bookings")}>
+          My Bookings
         </Button>
-        <UserRound />
-        <Button variant="outline" onClick={handleLogout}>
-          Logout{" "}
+        <Button onClick={onProfileClick} className="cursor-pointer">
+          <UserRound />
         </Button>
       </div>
     </header>

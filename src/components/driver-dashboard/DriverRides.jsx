@@ -2,7 +2,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import DriverRideRow from "./DriverRideRow";
 
 const DriverRides = ({ rides }) => {
-  return (
+  console.log("DriverRides.jsx",rides)
+  return ( 
     <Card>
       <CardHeader>
         <CardTitle>My Rides</CardTitle>

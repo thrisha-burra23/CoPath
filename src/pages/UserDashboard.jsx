@@ -4,31 +4,34 @@ import {
   useOutletContext,
   useParams,
 } from "react-router-dom";
-import UserDashboardSkeleton from "../loadingSkeleton/UserDashboardSkeleton";
 import Header from "../components/userDashboard/Header";
 import SearchCard from "../components/userDashboard/SearchCard";
 // import Map from "../components/userDashboard/Map";
 import { useState } from "react";
 import RideDetails from "../components/userDashboard/RideDetails";
+import DashboardSkeleton from "../loadingSkeleton/DashboardSkeleton";
 
 const UserDashboard = () => {
   const { authLoading, user } = useOutletContext();
   const [searchData, setSearchData] = useState(null);
+  const [isProfileOPen, setIsProfileOpen] = useState(false);
   const navigate = useNavigate();
   const { rideId } = useParams();
 
   const isRideModelOpen = !!rideId;
 
   if (authLoading) {
-    return <UserDashboardSkeleton />;
+    return <DashboardSkeleton />;
   }
   return (
     <>
-      <Header />
+      {/* <Header  user={user}  onProfileClick={() => setIsProfileOpen(true)} /> */}
       <main className="relative px-8 py-6 space-y-6">
         <div
           className={`space-y-6 transition-all duration-200 ${
-            isRideModelOpen ? "blur-sm pointer-events-none" : ""
+            isRideModelOpen || isProfileOPen
+              ? "blur-sm pointer-events-none"
+              : ""
           }`}
         >
           {/* Top Section */}
@@ -59,6 +62,11 @@ const UserDashboard = () => {
             </div>
           </div>
         )}
+
+        {/* <UserProfileDrawer
+          open={isProfileOPen}
+          onClose={() => setIsProfileOpen(false)}
+        /> */}
       </main>
       <footer className="px-8 py-6">@copyrights</footer>
     </>

@@ -13,7 +13,7 @@ export const createProfile = async (profileData) => {
         rowId: ID.unique(),
         data: profileData
     })
-} 
+}
 
 export const fetchProfileByUserId = async (userId) => {
     const result = await tablesDB.listRows({
@@ -23,3 +23,13 @@ export const fetchProfileByUserId = async (userId) => {
     });
     return result.rows[0] || null
 }
+
+export const updateWalletBalance = async (profileId, newBalance) => {
+    return await tablesDB.updateRow({
+        databaseId: DATABASE_ID,
+        tableId: PROFILE_COLLECTION_ID,
+        rowId: profileId,
+        data: { walletBalance: newBalance }
+    })
+}
+

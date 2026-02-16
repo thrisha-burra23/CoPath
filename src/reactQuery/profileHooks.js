@@ -3,7 +3,7 @@ import { fetchProfileByUserId } from "../appwrite/ProfileServices"
 
 export const useProfile=(userId)=>{
     return useQuery({
-        queryKey:["profile"],
+        queryKey:["profile",userId],
         queryFn:()=>fetchProfileByUserId(userId),
         enabled:! !userId
     })

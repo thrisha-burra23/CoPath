@@ -49,3 +49,54 @@ export const getPassergerRequestByRideAndUser = async ({ rideId, passengerId }) 
     })
     return result.rows[0] || []
 }
+
+export const getMyBookings = async (passengerId) => {
+    const result = await tablesDB.listRows({
+        databaseId: DATABASE_ID,
+        tableId: PASSENGER_REQUEST_COLLECTION,
+        queries: [
+            Query.equal("passengerId", passengerId),
+            Query.orderDesc("$createdAt"),
+        ]
+    })
+
+    return result.rows ?? [];
+}
+
+export const cancelPassengerRequest = async (requestId) => {
+  return await tablesDB.updateRow({
+    databaseId: DATABASE_ID,
+    tableId: PASSENGER_REQUEST_COLLECTION,
+    rowId: requestId,
+    data: {
+      status: "CANCELLED",
+    },
+  });
+};
+
+
+export const getApprovedRequestsByRides=async(rideId)=>{
+    const result= await tablesDB.listRows({
+        databaseId:DATABASE_ID,
+        tableId:PASSENGER_REQUEST_COLLECTION,
+        queries:[
+            Query.equal("rideId",rideId),
+            Query.equal("status","APPROVED")
+        ]
+    })
+
+    return result.rows ?? []
+}
+
+export const getApprovedPassengersByRide = async (rideId) => {
+  const result = await tablesDB.listRows({
+    databaseId: DATABASE_ID,
+    tableId: PASSENGER_REQUEST_COLLECTION,
+    queries: [
+      Query.equal("rideId", rideId),
+      Query.equal("status", "APPROVED"),
+    ],
+  });
+
+  return result.rows ?? [];
+};

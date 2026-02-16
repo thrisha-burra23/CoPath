@@ -1,5 +1,5 @@
 import appwriteClient from ".";
-import { TablesDB, ID} from "appwrite"
+import { TablesDB, ID, Query } from "appwrite"
 import { APPWRITE_DB_ID, APPWRITE_VEHICLES_TABLE_ID } from "../utils/constants";
 
 const tablesDB = new TablesDB(appwriteClient);
@@ -14,3 +14,15 @@ export const createVehicleRequest = async (vehicleData) => {
         data: vehicleData
     })
 }
+
+export const fetchApprovedVehicleByUser = async (userId) => {
+    const result = await tablesDB.listRows({
+        databaseId: DATABASE_ID,
+        tableId: VEHICLE_COLLECTION,
+        queries: [
+            Query.equal("userId", userId),
+            Query.equal("approved", true),
+        ],
+    });
+    return result.rows[0] || null;
+};
