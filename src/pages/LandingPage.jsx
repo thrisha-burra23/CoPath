@@ -58,7 +58,7 @@ const LandingPage = () => {
 
       {/* ================= HOW IT WORKS ================= */}
 
-      <section className="py-24 bg-gradient-to-b from-[#3f65b1] to-[#0e2a66] text-white px-6">
+      <section className="py-24 bg-linear-to-b from-[#3f65b1] to-[#0e2a66] text-white px-6">
         <h2 className="text-4xl font-bold text-center mb-16">
           How CoPath Works
         </h2>
@@ -98,7 +98,7 @@ const LandingPage = () => {
 
       {/* ================= WHY CHOOSE COPATH ================= */}
 
-      <section className="py-24 bg-gradient-to-b from-[#0e2a66] to-[#102f75] text-white px-6">
+      <section className="py-24 bg-linear-to-b from-[#0e2a66] to-[#102f75] text-white px-6">
         <h2 className="text-4xl font-bold text-center mb-16">
           Why Choose CoPath?
         </h2>
@@ -124,7 +124,7 @@ const LandingPage = () => {
 
       {/* ================= DRIVER SECTION ================= */}
 
-      <section className="py-24 bg-gradient-to-b from-[#102f75] to-[#0d255a] text-white px-6">
+      <section className="py-24 bg-linear-to-b from-[#102f75] to-[#0d255a] text-white px-6">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-4xl font-bold mb-6">
@@ -151,7 +151,7 @@ const LandingPage = () => {
       </section>
 
       {/* ================= CTA ================= */}
-      <section className="py-20 bg-gradient-to-r from-cyan-600 to-indigo-600 text-white text-center">
+      <section className="py-20 bg-linear-to-r from-cyan-600 to-indigo-600 text-white text-center">
         <h2 className="text-4xl font-bold mb-6">Ready to Ride Smarter?</h2>
         <div className="flex justify-center gap-6">
           <Button className="bg-white text-black hover:bg-gray-200 px-8">
