@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { useCreateAccount } from "../reactQuery/authHooks";
 import { useState } from "react";
 import FailedAlert from "../components/landingPage/FailedAlert";
-import RegisterSkeleton from "../loadingSkeleton/RegisterSkeleton";
+import DashboardSkeleton from "../loadingSkeleton/DashboardSkeleton";
 
 function Register() {
   const registerMutation = useCreateAccount();
@@ -40,17 +40,19 @@ function Register() {
   if (registerMutation.isPending) {
     return (
       <Card className="w-full max-w-sm">
-        <RegisterSkeleton />
+        <DashboardSkeleton />
       </Card>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <Card className="w-full max-w-sm ">
-        <CardHeader>
-          <CardTitle>Create your CoPath account</CardTitle>
-          <CardDescription>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-cyan-50 via-blue-50 to-indigo-100 px-4">
+      <Card className="w-full max-w-lg bg-white/90 backdrop-blur-xl border border-gray-200 shadow-2xl rounded-2xl">
+        <CardHeader className="space-y-2 pb-2">
+          <CardTitle className="text-2xl font-bold text-gray-800">
+            Create your CoPath account
+          </CardTitle>
+          <CardDescription className="text-sm text-gray-500">
             Smarter carpooling starts here. Sign up to share rides, save costs,
             and travel together.
           </CardDescription>
@@ -61,8 +63,14 @@ function Register() {
             {formError && <FailedAlert alertMessage={formError} />}
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
-                <Label htmlFor="fName">Full Name</Label>
+                <Label
+                  className="text-sm font-medium text-gray-700"
+                  htmlFor="fName"
+                >
+                  Full Name
+                </Label>
                 <Input
+                  className="h-11 rounded-xl border-gray-300 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition"
                   id="fName"
                   type="text"
                   placeholder="Abc Xyz"
@@ -72,8 +80,14 @@ function Register() {
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
+                <Label
+                  className="text-sm font-medium text-gray-700"
+                  htmlFor="email"
+                >
+                  Email
+                </Label>
                 <Input
+                  className="h-11 rounded-xl border-gray-300 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition"
                   id="email"
                   type="email"
                   placeholder="m@example.com"
@@ -83,8 +97,14 @@ function Register() {
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="phone">Phone</Label>
+                <Label
+                  className="text-sm font-medium text-gray-700"
+                  htmlFor="phone"
+                >
+                  Phone
+                </Label>
                 <Input
+                  className="h-11 rounded-xl border-gray-300 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition"
                   id="phone"
                   type="text"
                   placeholder="9988776655"
@@ -94,8 +114,14 @@ function Register() {
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="password">Password</Label>
+                <Label
+                  className="text-sm font-medium text-gray-700"
+                  htmlFor="password"
+                >
+                  Password
+                </Label>
                 <Input
+                  className="h-11 rounded-xl border-gray-300 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition"
                   id="password"
                   type="password"
                   value={password}
@@ -107,8 +133,15 @@ function Register() {
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="conPwd"> Confirm Password</Label>
+                <Label
+                  className="text-sm font-medium text-gray-700"
+                  htmlFor="conPwd"
+                >
+                  {" "}
+                  Confirm Password
+                </Label>
                 <Input
+                  className="h-11 rounded-xl border-gray-300 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition"
                   id="conPwd"
                   type="password"
                   value={confirmPassword}
@@ -125,7 +158,7 @@ function Register() {
           <CardFooter className="flex-col gap-2 pt-6">
             <Button
               type="submit"
-              className="w-[50%] bg-cyan-500"
+              className="w-full h-11 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-500 to-indigo-600 text-white font-medium shadow-lg hover:opacity-90 transition-all duration-300"
               disabled={registerMutation.isPending}
             >
               {registerMutation.isPending
@@ -133,11 +166,11 @@ function Register() {
                 : "Create Account"}
             </Button>
 
-            <p className="mt-6 text-center text-sm text-copath-muted">
+            <p className="mt-6 text-center text-sm text-gray-500">
               Already have an account?{" "}
               <Link
                 to="/login"
-                className="text-copath-blue font-medium hover:underline"
+                className="text-indigo-600 font-medium hover:underline transition"
               >
                 Log in
               </Link>

@@ -14,12 +14,12 @@ const DriverRideRow = ({ ride }) => {
     return label.split(",")[0];
   };
   return (
-    <div className="flex items-center justify-between border rounded-lg p-3">
+    <div className="flex items-center justify-between border border-gray-200 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-200">
       <div>
-        <p className="font-medium">
+        <p className="font-semibold text-gray-800">
           {shortLocation(ride.startLabel)} → {shortLocation(ride.endLabel)}
         </p>
-        <p className="text-gray-500 text-xs">
+        <p className="text-gray-500 text-xs mt-1">
           {new Date(ride.time).toLocaleString()} • Seats: {ride.availableSeats}{" "}
           • ₹{ride.price}
         </p>
@@ -27,9 +27,9 @@ const DriverRideRow = ({ ride }) => {
 
       <div className="flex items-center gap-2">
         <span
-          className={`px-2 py-1 text-xs rounded-full ${
+          className={`px-3 py-1 text-xs font-medium rounded-full ${
             ride.status === "ACTIVE"
-              ? "bg-green-100 text-green-700"
+              ? "bg-emerald-100 text-emerald-700"
               : ride.status === "COMPLETED"
                 ? "bg-blue-100 text-blue-700"
                 : "bg-gray-100 text-gray-600"
@@ -41,6 +41,7 @@ const DriverRideRow = ({ ride }) => {
           <Button
             size="sm"
             disabled={!profile || completeRideMutation.isLoading}
+            className="rounded-lg border-gray-300 hover:bg-gray-100 transition-all duration-200"
             variant="outline"
             onClick={() => {
               completeRideMutation.mutate({

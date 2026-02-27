@@ -18,19 +18,19 @@ export default function DriverDashboard() {
 
   if(isLoadding) return <DashboardSkeleton/>
   return (
-    <div className="min-h-screen bg-gray-50">
+ <div className="min-h-screen bg-gradient-to-br from-gray-50 via-slate-50 to-gray-100">
       
       {/* ================= Main ================= */}
-      <main className="p-8 space-y-8">
+      <main className="max-w-7xl mx-auto px-6 md:px-10 py-10 space-y-10">
        
-        <div className="grid grid-cols-1 lg:grid-cols-10 gap-6">
+        <div className="grid grid-cols-1 xl:grid-cols-10 gap-8 items-start">
           {/* Offer Ride - 60% */}
-          <div className="lg:col-span-6">
+          <div className="xl:col-span-6 space-y-6">
             <OfferRideCard />
           </div>
 
           {/* Passenger Requests - 40% */}
-          <div className="lg:col-span-4">
+         <div className="xl:col-span-4">
             <PassengerRequests rides={rides} requests={requests} />
           </div>
         </div>

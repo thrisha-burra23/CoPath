@@ -43,30 +43,41 @@ const Header = ({ user, onProfileClick }) => {
   };
 
   return (
-    <header className=" flex justify-between items-center px-8 py-6 bg-blue-50">
-      <div className="flex flex-row items-center justify-center  ">
+    <header className="sticky top-0 z-50 flex justify-between items-center px-8 py-4 bg-white/80 backdrop-blur-xl border-b border-gray-200 shadow-sm">
+      <div className="flex items-center gap-3">
         <img src={logo} alt="CoPath" className="w-12 h-12 mb-2" />
-        <div className="flex flex-col items-center text-center mb-2">
+        <div className="flex flex-col leading-tight">
           <h1 className="text-3xl font-bold text-black">
             <span className="bg-linear-to-r from-cyan-400 via-sky-400 to-indigo-600 bg-clip-text text-transparent">
               Co
             </span>
             Path
           </h1>
-          <p className="text-lg text-black/80 ">Smarter Carpooling</p>
+          <p className="text-xs text-gray-500">Smarter Carpooling</p>
         </div>
       </div>
-      <div className="font-serif text-2xl">Welcome {user.name}</div>
-      <div className="flex flex-row gap-6 justify-center items-center">
-        <Button onClick={() => navigate("/user-dashboard")}>
-          <Home />
+      <div className="text-lg font-medium text-gray-700">
+        Welcome {user.name}
+      </div>
+      <div className="flex items-center gap-4">
+        <Button
+          size="icon"
+          variant="outline"
+          className="rounded-full border-gray-300 hover:bg-gray-100 transition"
+          onClick={() => navigate("/user-dashboard")}
+        >
+          <Home className="w-4 h-4" />
         </Button>
         {renderButton()}
         <Button variant="outline" onClick={() => navigate("/my-bookings")}>
           My Bookings
         </Button>
-        <Button onClick={onProfileClick} className="cursor-pointer">
-          <UserRound />
+        <Button
+          size="icon"
+          className="rounded-full bg-gradient-to-r from-cyan-400 to-indigo-500 text-white hover:opacity-90 transition"
+          onClick={onProfileClick}
+        >
+          <UserRound className="w-4 h-4" />
         </Button>
       </div>
     </header>

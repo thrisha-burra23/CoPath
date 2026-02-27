@@ -58,7 +58,10 @@ const LandingPage = () => {
 
       {/* ================= HOW IT WORKS ================= */}
 
-      <section className="py-24 bg-linear-to-b from-[#3f65b1] to-[#0e2a66] text-white px-6">
+      <section
+        id="how"
+        className="scroll-mt-24 py-24 bg-linear-to-b from-[#3f65b1] to-[#0e2a66] text-white px-6"
+      >
         <h2 className="text-4xl font-bold text-center mb-16">
           How CoPath Works
         </h2>
@@ -98,7 +101,10 @@ const LandingPage = () => {
 
       {/* ================= WHY CHOOSE COPATH ================= */}
 
-      <section className="py-24 bg-linear-to-b from-[#0e2a66] to-[#102f75] text-white px-6">
+      <section
+        id="why"
+        className="scroll-mt-24 py-24 bg-linear-to-b from-[#3f65b1] to-[#0e2a66] text-white px-6"
+      >
         <h2 className="text-4xl font-bold text-center mb-16">
           Why Choose CoPath?
         </h2>
@@ -124,7 +130,10 @@ const LandingPage = () => {
 
       {/* ================= DRIVER SECTION ================= */}
 
-      <section className="py-24 bg-linear-to-b from-[#102f75] to-[#0d255a] text-white px-6">
+      <section
+        id="driver"
+        className="scroll-mt-24 py-24 bg-linear-to-b from-[#3f65b1] to-[#0e2a66] text-white px-6"
+      >
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-4xl font-bold mb-6">

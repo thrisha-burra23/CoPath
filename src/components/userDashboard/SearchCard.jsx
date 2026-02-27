@@ -8,10 +8,7 @@ import { useNavigate } from "react-router-dom";
 export default function SearchCard({ onSearch }) {
   const { data: user, isLoading } = useAuthUser();
   const isDisabled = isLoading || !user;
-  const navigate=useNavigate();
-
-  
-
+  const navigate = useNavigate();
   const [startText, setStartText] = useState("");
   const [endText, setEndText] = useState("");
 
@@ -63,11 +60,11 @@ export default function SearchCard({ onSearch }) {
     });
     if (date) params.append("date", date);
 
-    navigate(`/user-dashboard/search?${params.toString()}`)
+    navigate(`/user-dashboard/search?${params.toString()}`);
   };
 
   return (
-    <div className="w-full  max-w-sm space-y-4">
+    <div className="w-full space-y-5 bg-white/5 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-2xl">
       <div className="relative">
         <Input
           disabled={isDisabled}
@@ -128,7 +125,7 @@ export default function SearchCard({ onSearch }) {
 
       <Button
         onClick={handleSearch}
-        className="w-full text-white bg-[linear-gradient(135deg,#22D3EE,#38BDF8,#2563EB)]"
+         className="w-full text-white bg-[linear-gradient(135deg,#22D3EE,#38BDF8,#2563EB)]"
         variant="outline"
         disabled={isDisabled || !startLocation || !endLocation}
       >

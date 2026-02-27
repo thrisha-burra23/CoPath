@@ -17,7 +17,7 @@ const OfferRideCard = () => {
   const [endSuggestions, setEndSuggestions] = useState([]);
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-  const [seats, setSeats] = useState(1);
+  const [seats, setSeats] = useState("");
   const [price, setPrice] = useState("");
 
   const handleStartChange = async (value) => {
@@ -64,26 +64,26 @@ const OfferRideCard = () => {
   };
 
   return (
-    <div className="bg-white border rounded-xl p-6 space-y-5 h-full">
-
-      <h2 className="text-lg font-semibold flex items-center gap-2">
+    <div className="bg-white/80 backdrop-blur-xl border border-gray-200 shadow-xl rounded-2xl p-8 space-y-6 h-full transition-all duration-300">
+      <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
         ➕ Offer a New Ride
       </h2>
 
       {/* From / To */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="relative">
           <Input
+            className="h-11 rounded-xl border-gray-300 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400"
             placeholder="From (e.g. Bangalore)"
             value={startText}
             onChange={(e) => handleStartChange(e.target.value)}
           />
           {startSuggestions.length > 0 && (
-            <div className="absolute z-10 w-full bg-white border rounded shadow">
+            <div className="absolute z-20 w-full mt-2 bg-white border border-gray-200 rounded-xl shadow-lg max-h-48 overflow-y-auto">
               {startSuggestions.map((item) => (
                 <div
                   key={item.label}
-                  className="px-3 py-2 cursor-pointer hover:bg-gray-100"
+                  className="px-4 py-2 text-sm cursor-pointer hover:bg-cyan-50 transition"
                   onClick={() => {
                     setStartText(item.label);
                     setStartLocation(item);
@@ -99,7 +99,8 @@ const OfferRideCard = () => {
 
         <div className="relative">
           <Input
-            placeholder="To (e.g. Chennai)"
+            className="h-11 rounded-xl border-gray-300 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400"
+            placeholder="From (e.g. Bangalore)"
             value={endText}
             onChange={(e) => handleEndChange(e.target.value)}
           />
@@ -125,31 +126,42 @@ const OfferRideCard = () => {
 
       {/* Date / Time */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
-        <Input type="time" value={time} onChange={(e) => setTime(e.target.value)} />
+        <Input
+          className="h-11 rounded-xl border-gray-300 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400"
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+        />
+        <Input
+          className="h-11 rounded-xl border-gray-300 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400"
+          type="time"
+          value={time}
+          onChange={(e) => setTime(e.target.value)}
+        />
       </div>
 
       {/* Seats / Price */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Input
+          className="h-11 rounded-xl border-gray-300 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400"
+          placeholder="Seats Available (e.g. 3)"
           type="number"
           min={1}
-          placeholder="Seats Available"
           value={seats}
           onChange={(e) => setSeats(e.target.value)}
         />
         <Input
+          className="h-11 rounded-xl border-gray-300 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400"
+          placeholder="Price per Seat (₹) (e.g. 300)"
           type="number"
           min={0}
-          placeholder="Price per Seat (₹)"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
         />
       </div>
 
       <Button
-        className="w-full"
-        onClick={handleSubmit}
+        className="w-full h-12 rounded-xl text-white font-medium bg-gradient-to-r from-cyan-400 via-sky-500 to-indigo-600 hover:opacity-90 shadow-lg shadow-cyan-500/20 transition-all duration-300" onClick={handleSubmit}
         disabled={createRideMutation.isPending}
       >
         {createRideMutation.isPending ? "Publishing..." : "Publish Ride"}

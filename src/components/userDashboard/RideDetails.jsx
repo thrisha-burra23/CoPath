@@ -11,7 +11,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const RideDetails = () => {
-  const { rideId } = useParams();
+  const { rideId } = useParams();  
   const ridequery = useRideDetils(rideId);
   const navigate = useNavigate();
   const { data: user } = useAuthUser();
@@ -46,8 +46,10 @@ const RideDetails = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
-      <Card className="w-full max-w-md shadow-md bg-white">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
+
+      <Card className="w-full max-w-2xl bg-white/90 backdrop-blur-md border border-blue-100 rounded-2xl shadow-2xl">
+
         <CardContent className="p-6 space-y-6">
           {/* ================= Header ================= */}
           <div className="flex items-start justify-between">

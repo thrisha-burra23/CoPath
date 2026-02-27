@@ -6,7 +6,7 @@ const DriverStats = ({ rides, requests }) => {
   const total = completed.reduce((s, r) => s + (r.price || 0), 0);
 
   return (
-    <div className="grid grid-cols-3 mid:grid-cols-3 gap-3">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       <Stats title="Active Rides" value={activeRides} />
       <Stats title="Pending Requests" value={requests.length} />
       <Stats title="Earnings" value={total} />
@@ -15,11 +15,11 @@ const DriverStats = ({ rides, requests }) => {
 
   function Stats({ title, value }) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-sm text-gray-500">{title}</CardTitle>
+      <Card className="bg-white/80 backdrop-blur-xl border border-gray-200 shadow-lg rounded-2xl hover:shadow-xl transition-all duration-300">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-xs uppercase tracking-wide text-gray-500 font-medium">{title}</CardTitle>
         </CardHeader>
-        <CardContent className="text-2xl font-bold">{value}</CardContent>
+        <CardContent className="text-3xl font-bold text-gray-800">{value}</CardContent>
       </Card>
     );
   }

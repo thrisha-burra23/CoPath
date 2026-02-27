@@ -11,7 +11,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthUser, useLogin } from "../reactQuery/authHooks";
-import LoginSkeleton from "../loadingSkeleton/LoginSkeleton";
 import { useEffect, useState } from "react";
 import DashboardSkeleton from "../loadingSkeleton/DashboardSkeleton";
 import { useProfile } from "../reactQuery/profileHooks";
@@ -22,7 +21,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { data: user, isLoading } = useAuthUser();
-  const {data:profile,isLoading:profileLoading}=useProfile(user?.$id);
+  const { data: profile, isLoading: profileLoading } = useProfile(user?.$id);
 
   useEffect(() => {
     if (isLoading) return;
@@ -57,11 +56,13 @@ function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <Card className="w-full max-w-sm flex m-auto justify-center  ">
-        <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
-          <CardDescription>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-cyan-50 via-blue-50 to-indigo-100 px-4">
+      <Card className="w-full max-w-md md:max-w-lg bg-white/90 backdrop-blur-xl border border-gray-200 shadow-2xl rounded-2xl">
+        <CardHeader className="space-y-2 pb-2">
+          <CardTitle className="text-2xl font-bold text-gray-800">
+            Login to your account
+          </CardTitle>
+          <CardDescription className="text-sm text-gray-500">
             Enter your email below to login to your account
           </CardDescription>
         </CardHeader>
@@ -69,8 +70,14 @@ function Login() {
           <CardContent>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
+                <Label
+                  className="text-sm font-medium text-gray-700"
+                  htmlFor="email"
+                >
+                  Email
+                </Label>
                 <Input
+                  className="h-11 rounded-xl border-gray-300 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition"
                   id="email"
                   type="email"
                   placeholder="m@example.com"
@@ -81,15 +88,21 @@ function Login() {
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
+                  <Label
+                    className="text-sm font-medium text-gray-700"
+                    htmlFor="password"
+                  >
+                    Password
+                  </Label>
                   <Link
                     to="/forgot-password"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                  className="ml-auto text-sm text-indigo-600 font-medium hover:underline transition"
                   >
                     Forgot your password?
                   </Link>
                 </div>
                 <Input
+                  className="h-11 rounded-xl border-gray-300 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition"
                   id="password"
                   type="password"
                   value={password}
@@ -100,14 +113,14 @@ function Login() {
             </div>
           </CardContent>
           <CardFooter className="flex-col gap-2 p-6">
-            <Button type="submit" className="w-[50%] bg-cyan-500">
+            <Button type="submit" className="w-full h-11 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-500 to-indigo-600 text-white font-medium shadow-lg hover:opacity-90 transition-all duration-300">
               Login
             </Button>
-            <p className="mt-6 text-center text-sm text-copath-muted">
+            <p className="mt-6 text-center text-sm text-gray-500">
               Don't have an account?{" "}
               <Link
                 to="/register"
-                className="text-copath-blue font-medium hover:underline"
+                className="text-indigo-600 font-medium hover:underline transition"
               >
                 Register
               </Link>

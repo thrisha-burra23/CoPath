@@ -94,35 +94,6 @@ const MyBookingsPage = () => {
         </div>
       </div>
 
-      {/* Driver Rides */}
-      {/* {profile?.driverApproved && (
-        <div>
-          <h3 className="font-medium mb-3">Rides I Posted</h3>
-
-          {driverRides.map((ride) => (
-            <div
-              key={ride.$id}
-              className="border rounded-lg p-4 flex justify-between items-center"
-            >
-              <div>
-                <p className="font-medium">
-                  {ride.startLabel.split(",")[0]} →{ride.endLabel.split(",")[0]}
-                </p>
-                <p className="text-sm text-gray-500">
-                  {new Date(ride.time).toLocaleString()}
-                </p>
-              </div>
-
-              <Button
-                size="sm"
-                onClick={() => navigate(`/ride-details/${ride.$id}`)}
-              >
-                View Details
-              </Button>
-            </div>
-          ))}
-        </div>
-      )} */}
 
       {profile?.driverApproved && (
         <div>

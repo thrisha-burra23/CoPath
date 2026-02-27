@@ -4,9 +4,8 @@ import {
   useOutletContext,
   useParams,
 } from "react-router-dom";
-import Header from "../components/userDashboard/Header";
 import SearchCard from "../components/userDashboard/SearchCard";
-// import Map from "../components/userDashboard/Map";
+import Map from "../components/userDashboard/Map";
 import { useState } from "react";
 import RideDetails from "../components/userDashboard/RideDetails";
 import DashboardSkeleton from "../loadingSkeleton/DashboardSkeleton";
@@ -25,7 +24,6 @@ const UserDashboard = () => {
   }
   return (
     <>
-      {/* <Header  user={user}  onProfileClick={() => setIsProfileOpen(true)} /> */}
       <main className="relative px-8 py-6 space-y-6">
         <div
           className={`space-y-6 transition-all duration-200 ${
@@ -34,19 +32,20 @@ const UserDashboard = () => {
               : ""
           }`}
         >
-          {/* Top Section */}
-          <div className="grid grid-cols-3 gap-6">
-            <div className="col-span-1">
-              <SearchCard onSearch={setSearchData} />
+          <div className="grid grid-cols-12 gap-8">
+            <div className="col-span-4">
+              <div className="sticky top-24">
+                <SearchCard onSearch={setSearchData} />
+              </div>
             </div>
 
-            <div className="col-span-2 border">
-              map will render
-              {/* <Map searchData={searchData} /> */}
+            <div className="col-span-8">
+              <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
+                <Map searchData={searchData} />
+              </div>
             </div>
           </div>
 
-          {/* Bottom Section */}
           <Outlet />
         </div>
 
@@ -62,13 +61,7 @@ const UserDashboard = () => {
             </div>
           </div>
         )}
-
-        {/* <UserProfileDrawer
-          open={isProfileOPen}
-          onClose={() => setIsProfileOpen(false)}
-        /> */}
       </main>
-      <footer className="px-8 py-6">@copyrights</footer>
     </>
   );
 };
