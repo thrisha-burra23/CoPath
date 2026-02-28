@@ -25,6 +25,7 @@ import AuthLayout from "./components/layout/AuthLayout";
 import MyBookingsPage from "./pages/MyBookingsPage";
 import ChatPage from "./pages/ChatPage";
 import AdminRoute from "./routes/AdminRoute";
+import RequestPending from "./components/driver/RequestPending";
 function App() {
   console.log("ROUTE:", window.location.pathname);
 
@@ -58,6 +59,10 @@ function App() {
                 <Route
                   path="/chat/:rideId/:otherUserId"
                   element={<ChatPage />}
+                />
+                <Route
+                  path="/request-pending"
+                  element={<RequestPending />}
                 />
               </Route>
             </Route>

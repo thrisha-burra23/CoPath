@@ -18,7 +18,7 @@ const AuthLayout = () => {
         onProfileClick={() => setIsProfileOpen(true)}
       />
 
-      <main className="relative px-8 py-6">
+      <main className="relative ">
         <Outlet context={{ user, authLoading }} />
       </main>
 

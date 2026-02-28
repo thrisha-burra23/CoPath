@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import RideDetailsSkeleton from "@/src/loadingSkeleton/RideDetailsSkeleton";
 import { useAuthUser } from "@/src/reactQuery/authHooks";
 import {
   useCreatePassengerRequest,
@@ -11,17 +12,16 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const RideDetails = () => {
-  const { rideId } = useParams();  
+  const { rideId } = useParams();
   const ridequery = useRideDetils(rideId);
   const navigate = useNavigate();
   const { data: user } = useAuthUser();
-  
+
   const [seats, setSeats] = useState(1);
 
   const { data: booking } = usePassengerBookingStatus(rideId, user?.$id);
   const bookMutation = useCreatePassengerRequest();
-
-  if (ridequery.isLoading) return <p>Loading........</p>;
+  <RideDetailsSkeleton />;
 
   if (ridequery.error || !ridequery.data)
     return (
@@ -35,7 +35,7 @@ const RideDetails = () => {
   const rideDate = new Date(ride.time);
 
   const handleBooking = () => {
-     if (seats < 1 || seats > ride.availableSeats) return;
+    if (seats < 1 || seats > ride.availableSeats) return;
     bookMutation.mutate({
       rideId: ride.$id,
       driverId: ride.driverId,
@@ -47,21 +47,19 @@ const RideDetails = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
-
-      <Card className="w-full max-w-2xl bg-white/90 backdrop-blur-md border border-blue-100 rounded-2xl shadow-2xl">
-
+      <Card className="w-full max-w-3xl bg-white/90 backdrop-blur-xl border border-gray-200 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-300">
         <CardContent className="p-6 space-y-6">
           {/* ================= Header ================= */}
           <div className="flex items-start justify-between">
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">
+              <h2 className="text-2xl font-bold text-gray-900">
                 {ride.startLabel.split(",")[0]}{" "}
                 <span className="text-gray-400 mx-1">→</span>{" "}
                 {ride.endLabel.split(",")[0]}
               </h2>
 
               <div className="flex gap-2 mt-2">
-                <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-50 text-blue-600">
+                <span className="px-3 py-1 text-xs font-semibold rounded-full bg-indigo-100 text-indigo-700">
                   {ride.status}
                 </span>
                 <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-green-50 text-green-600">
@@ -76,12 +74,12 @@ const RideDetails = () => {
               onClick={() => navigate(-1)}
               className="text-gray-500 hover:text-gray-900"
             >
-              <X size={18} color="red" />
+              <X className="w-4 h-4 text-red-500" />
             </Button>
           </div>
 
           {/* ================= Ride Summary ================= */}
-          <div className="grid grid-cols-2 gap-4 text-sm">
+          <div className="grid grid-cols-2 gap-6 text-sm bg-gray-50 rounded-xl p-4">
             <div>
               <p className="text-gray-500">Date</p>
               <p className="font-medium">{rideDate.toLocaleDateString()}</p>
@@ -100,7 +98,7 @@ const RideDetails = () => {
           <div className="h-px bg-gray-200" />
 
           {/* ================= Driver & Vehicle ================= */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm bg-gray-50 rounded-xl p-5">
             {driver && (
               <div className="space-y-2">
                 <p className="font-semibold text-gray-900">Driver</p>
@@ -148,7 +146,7 @@ const RideDetails = () => {
                   setSeats(value);
                 }
               }}
-              className="w-16 border rounded px-2 py-1 text-center"
+              className="w-20 border border-gray-300 rounded-lg px-3 py-1.5 text-center focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition"
             />
           </div>
 
@@ -156,7 +154,7 @@ const RideDetails = () => {
           <div className="pt-4">
             {!booking && (
               <Button
-                className="w-full h-11 text-base font-semibold"
+                className="w-full h-12 text-base font-semibold rounded-xl bg-gradient-to-r from-cyan-400 via-sky-500 to-indigo-600 text-white shadow-lg hover:opacity-90 transition-all duration-300"
                 onClick={handleBooking}
                 disabled={ride.availableSeats === 0}
               >
@@ -165,7 +163,7 @@ const RideDetails = () => {
             )}
 
             {booking?.status === "PENDING" && (
-              <p className="text-yellow-600 font-medium">
+              <p className="text-yellow-600 font-medium bg-yellow-50 px-4 py-2 rounded-lg">
                 ⏳ Request sent. Waiting for driver approval.
               </p>
             )}
