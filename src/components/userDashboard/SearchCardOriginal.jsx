@@ -14,7 +14,7 @@ const SearchCardOriginal = () => {
   
 
   return (
-    <Card className="w-full max-w-4/12 bg-[linear-gradient(135deg,#E0F7FA,#E0F2FE,#E0E7FF)] text-slate-900 rounded-2xl shadow-2xl">
+    <Card className="w-full max-w-md md:max-w-lg bg-white rounded-2xl shadow-2xl border border-gray-200">
       <CardContent className="p-3 space-y-4">
         <h2 className="text-2xl font-semibold text-center text-blue-950">
           Where are you going today?

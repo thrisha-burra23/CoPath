@@ -4,7 +4,6 @@ import { useDriverRides } from "@/src/reactQuery/rideHooks";
 import DriverStats from "./DriverStats";
 import DriverRides from "./DriverRides";
 import PassengerRequests from "./PassengerRequests";
-import DriverEarnings from "./DriverEarnings";
 import OfferRideCard from "./OfferRideCard";
 import DashboardSkeleton from "@/src/loadingSkeleton/DashboardSkeleton";
 
@@ -39,7 +38,7 @@ export default function DriverDashboard() {
 
         <DriverRides rides={rides} />
 
-        <DriverEarnings rides={rides} />
+        
       </main>
     </div>
   );
