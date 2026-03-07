@@ -2,7 +2,6 @@
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -14,7 +13,7 @@ import { useLogout } from "@/src/reactQuery/authHooks";
 import { NavLink } from "react-router-dom";
 
 const AdminSidebar = () => {
-  const logout=useLogout();
+  const logout = useLogout();
   return (
     <>
       <Sidebar>
@@ -23,25 +22,12 @@ const AdminSidebar = () => {
             <SidebarGroupLabel>Copath Admin</SidebarGroupLabel>
 
             <SidebarGroupContent>
-
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild>
                     <NavLink to="/admin/dashboard">📊 Dashboard</NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <NavLink to="/admin/users">👤 Users</NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-
-                {/* <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <NavLink to="/admin/drivers">🚗 Drivers</NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem> */}
 
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild>
@@ -52,30 +38,17 @@ const AdminSidebar = () => {
                 </SidebarMenuItem>
 
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <NavLink to="/admin/payments">💳 Payments</NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <NavLink to="/admin/settings">⚙️ Settings</NavLink>
+                  <SidebarMenuButton
+                    className="text-red-500 font-bold" variant="outline"
+                    onClick={() => logout.mutate()}
+                  >
+                    🚪 Sign Out
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
-
-        <SidebarFooter>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton className="text-red-500" onClick={()=>logout.mutate()}>
-                🚪 Sign Out
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarFooter>
       </Sidebar>
     </>
   );
