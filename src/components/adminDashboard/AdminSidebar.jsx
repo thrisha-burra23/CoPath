@@ -10,9 +10,11 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
+import { useLogout } from "@/src/reactQuery/authHooks";
 import { NavLink } from "react-router-dom";
 
 const AdminSidebar = () => {
+  const logout=useLogout();
   return (
     <>
       <Sidebar>
@@ -68,7 +70,7 @@ const AdminSidebar = () => {
         <SidebarFooter>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton className="text-red-500">
+              <SidebarMenuButton className="text-red-500" onClick={()=>logout.mutate()}>
                 🚪 Sign Out
               </SidebarMenuButton>
             </SidebarMenuItem>

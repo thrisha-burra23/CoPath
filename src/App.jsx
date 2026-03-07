@@ -11,7 +11,6 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import VerifyEmail from "./components/auth/VerifyEmail";
 import VerifyInfo from "./components/auth/VerifyInfo";
-import OfferRide from "./pages/OfferRidePage";
 import RequestOfferRide from "./components/driver/RequestOfferRide";
 import AdminLayout from "./components/adminDashboard/AdminLayout";
 import Dashboard from "./components/adminDashboard/Dashboard";
@@ -25,7 +24,8 @@ import AuthLayout from "./components/layout/AuthLayout";
 import MyBookingsPage from "./pages/MyBookingsPage";
 import ChatPage from "./pages/ChatPage";
 import AdminRoute from "./routes/AdminRoute";
-import RequestPending from "./components/driver/RequestPending";
+
+import OfferRide from "./pages/OfferRide";
 function App() {
   console.log("ROUTE:", window.location.pathname);
 
@@ -51,19 +51,13 @@ function App() {
                 </Route>
 
                 <Route path="/offer-ride" element={<OfferRide />} />
-                <Route
-                  path="/request-to-offer-ride"
-                  element={<RequestOfferRide />}
-                />
+                
                 <Route path="/my-bookings" element={<MyBookingsPage />} />
                 <Route
                   path="/chat/:rideId/:otherUserId"
                   element={<ChatPage />}
                 />
-                <Route
-                  path="/request-pending"
-                  element={<RequestPending />}
-                />
+                
               </Route>
             </Route>
 

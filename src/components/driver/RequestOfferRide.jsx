@@ -3,11 +3,12 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { 
+   useOutletContext } from "react-router-dom";
 
 const RequestOfferRide = ({ onSubmit, isLoading }) => {
   const { user } = useOutletContext();
-  const navigate = useNavigate();
+
 
   const [license, setLicense] = useState("");
   const [model, setModel] = useState("");
@@ -26,7 +27,7 @@ const RequestOfferRide = ({ onSubmit, isLoading }) => {
       numberPlate,
       seats,
     });
-    navigate("/request-pending");
+    
   };
 
   return (

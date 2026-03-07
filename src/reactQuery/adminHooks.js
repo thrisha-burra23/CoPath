@@ -16,6 +16,7 @@ export const useApproveDriver = () => {
         onSuccess: () => {
             toast("Driver Approved");
             queryClient.invalidateQueries(["admin-driver-requests"]);
+            queryClient.invalidateQueries({ queryKey: ["driver-req"], exact: false });//added today for dashboard checking
         }
     })
 }
@@ -26,6 +27,8 @@ export const useRejectDriver = () => {
         onSuccess: () => {
             toast.info("Driver request Rejected");
             queryClient.invalidateQueries(["admin-driver-requests"]);
+            // queryClient.invalidateQueries(["driver-req"]);
+            queryClient.invalidateQueries({ queryKey: ["driver-req"], exact: false });
         }
     })
 }
