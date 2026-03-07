@@ -26,7 +26,7 @@ const MyBookingsPage = () => {
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-10 space-y-10">
         <h2 className="text-3xl font-bold text-gray-800">My Bookings</h2>
 
-        {/* Passenger Bookings */}
+       
         <div>
           <h3 className="text-lg font-semibold text-gray-700 mb-6">
             Rides I Booked

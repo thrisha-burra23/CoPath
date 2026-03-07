@@ -49,7 +49,7 @@ const RideDetails = () => {
     <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
       <Card className="w-full max-w-3xl bg-white/90 backdrop-blur-xl border border-gray-200 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-300">
         <CardContent className="p-6 space-y-6">
-          {/* ================= Header ================= */}
+          
           <div className="flex items-start justify-between">
             <div>
               <h2 className="text-2xl font-bold text-gray-900">
@@ -78,7 +78,7 @@ const RideDetails = () => {
             </Button>
           </div>
 
-          {/* ================= Ride Summary ================= */}
+         
           <div className="grid grid-cols-2 gap-6 text-sm bg-gray-50 rounded-xl p-4">
             <div>
               <p className="text-gray-500">Date</p>
@@ -94,10 +94,9 @@ const RideDetails = () => {
             </div>
           </div>
 
-          {/* ================= Divider ================= */}
+         
           <div className="h-px bg-gray-200" />
 
-          {/* ================= Driver & Vehicle ================= */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm bg-gray-50 rounded-xl p-5">
             {driver && (
               <div className="space-y-2">
@@ -131,7 +130,7 @@ const RideDetails = () => {
               </div>
             )}
           </div>
-          {/* ================= Seat Selection ================= */}
+          
           <div className="flex items-center justify-between text-sm">
             <span className="text-gray-600">Select Seats</span>
 
@@ -150,7 +149,7 @@ const RideDetails = () => {
             />
           </div>
 
-          {/* ================= CTA ================= */}
+          
           <div className="pt-4">
             {!booking && (
               <Button

@@ -19,7 +19,7 @@ const OfferRide = () => {
     />
   }
 
-  // ✅ Then check status
+  
   if (driverRequest.status === "PENDING") {
     return <RequestPending />;
   }
