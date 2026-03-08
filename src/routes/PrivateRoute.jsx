@@ -21,9 +21,9 @@ const PrivateRoute = () => {
     return <Navigate to="/login" replace />;
   }
 
-  if (!user.emailVerification) {
-    return <Navigate to="/verify-info" replace />;
-  }
+  // if (!user.emailVerification) {
+  //   return <Navigate to="/verify-info" replace />;
+  // }
 
   return <Outlet context={{ authLoading: false, user }} />;
 };

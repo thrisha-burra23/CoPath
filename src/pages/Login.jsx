@@ -27,9 +27,10 @@ function Login() {
     if (isLoading) return;
 
     if (user) {
-      if (!user.emailVerification) {
-        navigate("/verify-info");
-      } else if (profile?.role === "ADMIN") {
+      // if (!user.emailVerification) {
+      //   navigate("/verify-info");
+      // } else
+         if (profile?.role === "ADMIN") {
         navigate("/admin");
       } else {
         navigate("/user-dashboard");

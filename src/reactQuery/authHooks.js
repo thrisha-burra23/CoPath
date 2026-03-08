@@ -50,18 +50,18 @@ export const useLogin = () => {
             return await appWriteAccount.login(email, password)
         },
         onSuccess: async () => {
-            const user = await appWriteAccount.getUser();
+            // const user = await appWriteAccount.getUser();
 
-            if (!user.emailVerification) {
-                await appWriteAccount.sendEmailVerification(
-                    `${window.location.origin}/verify-email`
-                );
-                await appWriteAccount.logout();
+            // if (!user.emailVerification) {
+            //     await appWriteAccount.sendEmailVerification(
+            //         `${window.location.origin}/verify-email`
+            //     );
+            //     await appWriteAccount.logout();
 
-                toast.info("Verification email sent.Please verify your Email");
-                navigate("/verify-info");
-                return;
-            }
+            //     toast.info("Verification email sent.Please verify your Email");
+            //     navigate("/verify-info");
+            //     return;
+            // }
 
             toast.success("Login successful");
             navigate("/user-dashboard");
@@ -74,23 +74,23 @@ export const useLogin = () => {
     return result;
 }
 
-export const useVerification = () => {
-    const navigate = useNavigate();
-    const result = useMutation({
-        mutationFn: ({ userId, secret }) => appWriteAccount.verifyEmail(userId, secret),
+// export const useVerification = () => {
+//     const navigate = useNavigate();
+//     const result = useMutation({
+//         mutationFn: ({ userId, secret }) => appWriteAccount.verifyEmail(userId, secret),
 
-        onSuccess: () => {
-            toast.success("Email Verified Successfully. Please login");
-            navigate("/login");
-        },
+//         onSuccess: () => {
+//             toast.success("Email Verified Successfully. Please login");
+//             navigate("/login");
+//         },
 
-        onError: () => {
-            toast.info("This verification link is invalid or already used. Please login.")
-            navigate("/login");
-        }
-    });
-    return result;
-}
+//         onError: () => {
+//             toast.info("This verification link is invalid or already used. Please login.")
+//             navigate("/login");
+//         }
+//     });
+//     return result;
+// }
 
 export const useForgotPassword = () => {
 
@@ -152,8 +152,6 @@ export const useLogout = () => {
         onSuccess: () => {
             queryClient.setQueryData(["is-logging-out"], true);
             queryClient.removeQueries({ queryKey: ["auth-user"] });
-            // queryClient.setQueryData(["auth-user"], null);
-            // queryClient.invalidateQueries({ queryKey: ["auth-user"] });
             toast.success("Logged out successfully");
             navigate("/")
         }

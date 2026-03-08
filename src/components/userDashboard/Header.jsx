@@ -26,7 +26,7 @@ const Header = ({ user, onProfileClick }) => {
         <>
           <Button
             variant="outline"
-            onClick={() => navigate("/request-to-offer-ride")}
+            onClick={() => navigate("/offer-ride")}
           >
             Offer a Ride
           </Button>

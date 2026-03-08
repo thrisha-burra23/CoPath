@@ -9,8 +9,8 @@ import PrivateRoute from "./routes/PrivateRoute";
 import UserDashboard from "./pages/UserDashboard";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
-import VerifyEmail from "./components/auth/VerifyEmail";
-import VerifyInfo from "./components/auth/VerifyInfo";
+// import VerifyEmail from "./components/auth/VerifyEmail";
+// import VerifyInfo from "./components/auth/VerifyInfo";
 import AdminLayout from "./components/adminDashboard/AdminLayout";
 import Dashboard from "./components/adminDashboard/Dashboard";
 import DriverRequests from "./components/adminDashboard/DriverRequests";
@@ -34,8 +34,8 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/verify-info" element={<VerifyInfo />} />
-            <Route path="/verify-email" element={<VerifyEmail />} />
+            {/* <Route path="/verify-info" element={<VerifyInfo />} /> */}
+            {/* <Route path="/verify-email" element={<VerifyEmail />} /> */}
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
 
