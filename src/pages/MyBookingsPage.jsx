@@ -4,7 +4,7 @@ import { useProfile } from "../reactQuery/profileHooks";
 import { useMyBookingsWithRideDetails } from "../reactQuery/passengerRequestHooks";
 import { useDriverRides } from "../reactQuery/rideHooks";
 import { Button } from "@/components/ui/button";
-import DriverRideCard from "../components/driver-dashboard/DriverRideCArd";
+import DriverRideCard from "../components/driver-dashboard/DriverRideCard";
 import MyBookingsPageSkeleton from "../loadingSkeleton/MyBookingsSkeleton";
 
 const MyBookingsPage = () => {
