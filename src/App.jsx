@@ -11,11 +11,8 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import VerifyEmail from "./components/auth/VerifyEmail";
 import VerifyInfo from "./components/auth/VerifyInfo";
-import RequestOfferRide from "./components/driver/RequestOfferRide";
 import AdminLayout from "./components/adminDashboard/AdminLayout";
 import Dashboard from "./components/adminDashboard/Dashboard";
-import Users from "./components/adminDashboard/Users";
-import Payments from "./components/adminDashboard/Payments";
 import DriverRequests from "./components/adminDashboard/DriverRequests";
 import AvailableRides from "./components/userDashboard/AvailableRIdes";
 import SearchRides from "./components/userDashboard/SearchRides";
@@ -51,22 +48,19 @@ function App() {
                 </Route>
 
                 <Route path="/offer-ride" element={<OfferRide />} />
-                
+
                 <Route path="/my-bookings" element={<MyBookingsPage />} />
                 <Route
                   path="/chat/:rideId/:otherUserId"
                   element={<ChatPage />}
                 />
-                
               </Route>
             </Route>
 
             <Route element={<AdminRoute />}>
               <Route path="/admin" element={<AdminLayout />}>
                 <Route path="dashboard" element={<Dashboard />} />
-                <Route path="users" element={<Users />} />
                 <Route path="driver-requests" element={<DriverRequests />} />
-                <Route path="payments" element={<Payments />} />
               </Route>
             </Route>
           </Routes>
