@@ -14,7 +14,7 @@ import VerifyInfo from "./components/auth/VerifyInfo";
 import AdminLayout from "./components/adminDashboard/AdminLayout";
 import Dashboard from "./components/adminDashboard/Dashboard";
 import DriverRequests from "./components/adminDashboard/DriverRequests";
-import AvailableRides from "./components/userDashboard/AvailableRIdes";
+import AvailableRides from "./components/userDashboard/AvailableRides";
 import SearchRides from "./components/userDashboard/SearchRides";
 import RideDetails from "./components/userDashboard/RideDetails";
 import AuthLayout from "./components/layout/AuthLayout";
